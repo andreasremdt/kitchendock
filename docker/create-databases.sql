@@ -1,0 +1,2 @@
+CREATE DATABASE IF NOT EXISTS 'kitchendock-dev';
+CREATE DATABASE IF NOT EXISTS 'kitchendock-test';

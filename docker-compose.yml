@@ -1,0 +1,16 @@
+version: "3.9"
+
+services:
+  db:
+    image: mysql
+    container_name: kitchendock
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./docker/create-databases.sql:/docker-entrypoint-initdb.d/create-databases.sql
+      - db-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
+
+volumes:
+  db-data:
