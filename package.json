@@ -5,7 +5,7 @@
     "build": "prisma generate && prisma migrate deploy && next build",
     "start": "next start",
     "lint": "next lint",
-    "prebuild": "prisma generate",
+    "prebuild": "prisma generate && prisma migrate deploy",
     "predev": "prisma generate",
     "prisma:migrate": "prisma migrate deploy"
   },
