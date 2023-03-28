@@ -1,21 +1,32 @@
 import Image from "next/image";
 import Link from "next/link";
 
+export const metadata = {
+  title: "Next.js Prisma MySQL Auth Starter",
+  description:
+    "This is a Next.js starter kit that uses Next-Auth for simple email + password login and a MySQL database to persist the data.",
+  openGraph: {
+    title: "Next.js Prisma MySQL Auth Starter",
+    images: ["https://nextjs-mysql-auth.vercel.app/thumbnail.png"],
+    description:
+      "This is a Next.js starter kit that uses Next-Auth for simple email + password login and a MySQL database to persist the data.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Next.js Prisma MySQL Auth Starter",
+    images: ["https://nextjs-mysql-auth.vercel.app/thumbnail.png"],
+    description:
+      "This is a Next.js starter kit that uses Next-Auth for simple email + password login and a MySQL database to persist the data.",
+  },
+};
+
 export default function Home() {
   return (
     <div className="flex h-screen bg-black">
       <div className="w-screen h-screen flex flex-col justify-center items-center">
-        <Image
-          width={512}
-          height={512}
-          src="/logo.png"
-          alt="Platforms on Vercel"
-          className="w-48 h-48"
-        />
+        <Image width={512} height={512} src="/logo.png" alt="Platforms on Vercel" className="w-48 h-48" />
         <div className="text-center max-w-screen-sm mb-10">
-          <h1 className="text-stone-200 font-bold text-2xl">
-            Next.js Prisma MySQL Auth Starter
-          </h1>
+          <h1 className="text-stone-200 font-bold text-2xl">Next.js Prisma MySQL Auth Starter</h1>
           <p className="text-stone-400 mt-5">
             This is a{" "}
             <a
@@ -35,8 +46,7 @@ export default function Home() {
             >
               Next-Auth
             </a>{" "}
-            for simple email + password login and a MySQL database to persist
-            the data.
+            for simple email + password login and a MySQL database to persist the data.
           </p>
         </div>
         <div className="flex space-x-3">
