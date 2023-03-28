@@ -16,7 +16,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body className={inter.variable}>
         <Toaster />
         {AuthStatusDiv}
-        {children}
+        <main className="bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-indigo-200 via-red-200 to-yellow-100 min-h-screen flex flex-col justify-center items-center">
+          {children}
+        </main>
       </body>
     </html>
   );

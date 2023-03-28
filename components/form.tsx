@@ -1,70 +1,27 @@
 "use client";
 
-import { useState } from "react";
-import { signIn } from "next-auth/react";
 import LoadingDots from "@/components/loading-dots";
-import toast from "react-hot-toast";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import useAuthState from "@/hooks/use-auth-state";
 
-export default function Form({ type }: { type: "login" | "register" }) {
-  const [loading, setLoading] = useState(false);
-  const router = useRouter();
+type FormProps = {
+  type: "login" | "register";
+};
+
+export default function Form({ type }: FormProps) {
+  const { email, setEmail, password, setPassword, loading, handleSubmit } = useAuthState(type);
 
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        setLoading(true);
-        if (type === "login") {
-          signIn("credentials", {
-            redirect: false,
-            email: e.currentTarget.email.value,
-            password: e.currentTarget.password.value,
-            // @ts-ignore
-          }).then(({ ok, error }) => {
-            setLoading(false);
-            if (ok) {
-              router.push("/protected");
-            } else {
-              toast.error(error);
-            }
-          });
-        } else {
-          fetch("/api/auth/register", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              email: e.currentTarget.email.value,
-              password: e.currentTarget.password.value,
-            }),
-          }).then(async (res) => {
-            setLoading(false);
-            if (res.status === 200) {
-              toast.success("Account created! Redirecting to login...");
-              setTimeout(() => {
-                router.push("/login");
-              }, 2000);
-            } else {
-              toast.error(await res.text());
-            }
-          });
-        }
-      }}
-      className="flex flex-col space-y-4 bg-gray-50 px-4 py-8 sm:px-16"
-    >
+    <form onSubmit={handleSubmit} className="flex flex-col space-y-4 bg-white px-4 py-8 sm:px-16">
       <div>
-        <label
-          htmlFor="email"
-          className="block text-xs text-gray-600 uppercase"
-        >
+        <label htmlFor="email" className="block text-xs text-gray-600 uppercase">
           Email Address
         </label>
         <input
           id="email"
           name="email"
+          value={email}
+          onChange={(event) => setEmail(event.currentTarget.value)}
           type="email"
           placeholder="panic@thedis.co"
           autoComplete="email"
@@ -73,14 +30,13 @@ export default function Form({ type }: { type: "login" | "register" }) {
         />
       </div>
       <div>
-        <label
-          htmlFor="password"
-          className="block text-xs text-gray-600 uppercase"
-        >
+        <label htmlFor="password" className="block text-xs text-gray-600 uppercase">
           Password
         </label>
         <input
           id="password"
+          value={password}
+          onChange={(event) => setPassword(event.currentTarget.value)}
           name="password"
           type="password"
           required
@@ -95,11 +51,7 @@ export default function Form({ type }: { type: "login" | "register" }) {
             : "border-black bg-black text-white hover:bg-white hover:text-black"
         } flex h-10 w-full items-center justify-center rounded-md border text-sm transition-all focus:outline-none`}
       >
-        {loading ? (
-          <LoadingDots color="#808080" />
-        ) : (
-          <p>{type === "login" ? "Sign In" : "Sign Up"}</p>
-        )}
+        {loading ? <LoadingDots color="#808080" /> : <p>{type === "login" ? "Sign In" : "Sign Up"}</p>}
       </button>
       {type === "login" ? (
         <p className="text-center text-sm text-gray-600">
