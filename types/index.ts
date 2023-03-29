@@ -19,3 +19,13 @@ export type Ingredients = {
 }[];
 
 export type Instructions = string[];
+
+export type Recipe = {
+  id: string;
+  title: string;
+  description?: string;
+  category?: string;
+  image?: string;
+  ingredients: Ingredients;
+  instructions: Instructions;
+};

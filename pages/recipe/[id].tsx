@@ -1,49 +1,44 @@
+import { useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import Icon from "@/components/icon";
 import recipes from "../../lib/data";
-import Typography from "@/components/typography";
 import Button from "@/components/button";
 import RecipeBar from "@/components/recipe-bar";
 import RecipeIngredients from "@/components/recipe-ingredients";
 import RecipeInstructions from "@/components/recipe-instructions";
+import RecipeHeader from "@/components/recipe-header";
 
 export default function Recipe() {
   const recipe = recipes[1];
+  const [editing, setEditing] = useState(false);
 
   return (
     <>
       <Head>
-        <title>Millionaires Shortbread</title>
+        <title>{recipe.title}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main>
         <div className="bg-primary-50">
-          <div className="container mx-auto py-2">
+          <div className="container mx-auto py-2 flex">
             <Button href="/">
               <Icon name="chevronLeft" /> Go Back
             </Button>
+            <Button className="ml-auto" onClick={() => setEditing(!editing)} selected={editing}>
+              <Icon name={editing ? "check" : "fileEdit"} />
+              {editing ? "Finish Editing" : "Enable Edit Mode"}
+            </Button>
           </div>
         </div>
-        <header className="banner py-32 border-y border-primary-300">
-          <div className="bg-white border border-primary-300 max-w-4xl px-16 pb-12 w-max mx-auto text-center">
-            <Typography variant="h1" as="h1" className="-translate-y-8">
-              {recipe.title}
-            </Typography>
-            {recipe.category && (
-              <Typography variant="h4" className="mb-4">
-                {recipe.category}
-              </Typography>
-            )}
-            {recipe.description && <Typography>{recipe.description}</Typography>}
-          </div>
-        </header>
 
-        <RecipeBar />
+        <RecipeHeader editing={editing} recipe={recipe} />
 
-        <RecipeIngredients ingredients={recipe.ingredients!} />
+        <RecipeBar editing={editing} />
+
+        <RecipeIngredients editing={editing} ingredients={recipe.ingredients!} />
 
         {recipe.image && (
           <div className="container mx-auto">
@@ -57,7 +52,7 @@ export default function Recipe() {
           </div>
         )}
 
-        <RecipeInstructions instructions={recipe.instructions!} />
+        <RecipeInstructions editing={editing} instructions={recipe.instructions!} />
       </main>
     </>
   );

@@ -7,27 +7,28 @@ import Button from "@/components/button";
 
 type Props = {
   ingredients: Ingredients;
+  editing: boolean;
 };
 
-export default function RecipeIngredients({ ingredients }: Props) {
-  const [editing, setEditing] = useState(false);
+export default function RecipeIngredients({ ingredients, editing }: Props) {
+  const [selection, setSelection] = useState(false);
 
   return (
     <section className="container mx-auto py-12">
       <Typography as="h2" variant="h3" className="mb-6 flex gap-x-1">
         Ingredients
-        {!editing && (
-          <Button title="Edit" onClick={() => setEditing(true)}>
+        {editing && !selection && (
+          <Button title="Edit" onClick={() => setSelection(true)}>
             <Icon name="edit" width={24} height={24} />
           </Button>
         )}
       </Typography>
-      {editing ? (
+      {selection && editing ? (
         <Editor
-          onCancel={() => setEditing(false)}
+          onCancel={() => setSelection(false)}
           onSave={(content) => {
             console.log(content);
-            setEditing(false);
+            setSelection(false);
           }}
         />
       ) : (

@@ -7,28 +7,29 @@ import Editor from "@/components/editor";
 
 type Props = {
   instructions: Instructions;
+  editing: boolean;
 };
 
-export default function RecipeInstructions({ instructions }: Props) {
-  const [editing, setEditing] = useState(false);
+export default function RecipeInstructions({ instructions, editing }: Props) {
+  const [selection, setSelection] = useState(false);
 
   return (
     <section className="max-w-lg mx-auto my-12">
       <Typography as="h2" variant="h3" className="mb-6 flex gap-x-1">
         Instructions
-        {!editing && (
-          <Button title="Edit" onClick={() => setEditing(true)}>
+        {editing && !selection && (
+          <Button title="Edit" onClick={() => setSelection(true)}>
             <Icon name="edit" width={24} height={24} />
           </Button>
         )}
       </Typography>
 
-      {editing ? (
+      {selection && editing ? (
         <Editor
-          onCancel={() => setEditing(false)}
+          onCancel={() => setSelection(false)}
           onSave={(content) => {
             console.log(content);
-            setEditing(false);
+            setSelection(false);
           }}
         />
       ) : (

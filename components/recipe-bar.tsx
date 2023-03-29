@@ -4,7 +4,11 @@ import Icon from "@/components/icon";
 import Button from "@/components/button";
 import { Preferences } from "@/types";
 
-export default function RecipeBar() {
+type Props = {
+  editing: boolean;
+};
+
+export default function RecipeBar({ editing }: Props) {
   const [preferences, setPreferences] = useState<Preferences>({
     serves: 1,
     measurement: "metric",
@@ -24,22 +28,24 @@ export default function RecipeBar() {
   return (
     <nav className="py-1 border-b border-primary-300 sticky top-0 bg-primary-100">
       <div className="container mx-auto flex">
-        <div className="flex items-center mr-auto">
-          <Button title="Decrease serves" onClick={handleDecrease}>
-            <Icon name="minus" />
-          </Button>
-          <span className="border-x border-primary-300 block px-2 mx-1 font-sans font-bold uppercase text-xs tracking-widest">
-            {preferences.serves} serve{preferences.serves > 1 && "s"}
-          </span>
-          <Button
-            title="Increase serves"
-            onClick={() => setPreferences((prev) => ({ ...prev, serves: prev.serves + 1 }))}
-          >
-            <Icon name="plus" />
-          </Button>
-        </div>
+        {!editing && (
+          <div className="flex items-center">
+            <Button title="Decrease serves" onClick={handleDecrease}>
+              <Icon name="minus" width={18} height={18} />
+            </Button>
+            <span className="border-x border-primary-300 block px-2 mx-1 font-sans font-bold uppercase text-xs tracking-widest">
+              {preferences.serves} serve{preferences.serves > 1 && "s"}
+            </span>
+            <Button
+              title="Increase serves"
+              onClick={() => setPreferences((prev) => ({ ...prev, serves: prev.serves + 1 }))}
+            >
+              <Icon name="plus" width={18} height={18} />
+            </Button>
+          </div>
+        )}
 
-        <div className="flex gap-x-1 border-r border-primary-300 mr-2 pr-2">
+        <div className="flex gap-x-1 border-r border-primary-300 mr-2 pr-2 ml-auto">
           <Button
             onClick={() => setPreferences((prev) => ({ ...prev, volume: "volume" }))}
             selected={preferences.volume === "volume"}
