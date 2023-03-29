@@ -1,3 +1,5 @@
+import { JSONContent } from "@tiptap/react";
+
 export type Measurement = "imperial" | "metric";
 
 export type Temperature = "celsius" | "fahrenheit";
@@ -11,14 +13,9 @@ export type Preferences = {
   volume: Volume;
 };
 
-export type Ingredient = string;
+export type Ingredients = JSONContent;
 
-export type Ingredients = {
-  title?: string;
-  children: Ingredient[];
-}[];
-
-export type Instructions = string[];
+export type Instructions = JSONContent;
 
 export type Recipe = {
   id: string;
@@ -26,6 +23,6 @@ export type Recipe = {
   description?: string;
   category?: string;
   image?: string;
-  ingredients: Ingredients;
-  instructions: Instructions;
+  ingredients?: Ingredients;
+  instructions?: Instructions;
 };

@@ -6,7 +6,8 @@
     "start": "next start",
     "lint": "next lint",
     "prebuild": "prisma generate && prisma migrate deploy",
-    "prisma:migrate": "prisma migrate deploy"
+    "prisma:migrate": "prisma migrate deploy",
+    "check": "tsc --noEmit"
   },
   "dependencies": {
     "@prisma/client": "^4.12.0",

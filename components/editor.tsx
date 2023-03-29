@@ -9,6 +9,7 @@ import Bold from "@tiptap/extension-bold";
 import Heading from "@tiptap/extension-heading";
 import Icon from "@/components/icon";
 import Button from "@/components/button";
+import { transformHeadingsTo } from "@/lib/parser";
 
 type Props = {
   value?: JSONContent;
@@ -22,6 +23,9 @@ export default function Editor({ onCancel, onSave, value, placeholder }: Props) 
     editorProps: {
       attributes: {
         class: "outline-none p-2 bg-primary-50 min-h-[200px]",
+      },
+      transformPastedHTML(html: string) {
+        return transformHeadingsTo("h3", html);
       },
     },
     extensions: [
@@ -39,6 +43,7 @@ export default function Editor({ onCancel, onSave, value, placeholder }: Props) 
       Italic,
       Bold,
       Heading.configure({
+        levels: [3],
         HTMLAttributes: {
           class: "uppercase font-sans tracking-widest text-primary-900 font-bold mb-4",
         },

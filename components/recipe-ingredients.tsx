@@ -5,14 +5,18 @@ import Editor from "@/components/editor";
 import Icon from "@/components/icon";
 import Button from "@/components/button";
 import EmptyState from "@/components/empty-state";
+import { JSONContent } from "@tiptap/react";
+import { parseIngredients } from "@/lib/parser";
 
 type Props = {
-  ingredients: Ingredients;
+  ingredients?: Ingredients;
   editing: boolean;
+  onSave?: (content?: JSONContent) => void;
 };
 
-export default function RecipeIngredients({ ingredients, editing }: Props) {
+export default function RecipeIngredients({ ingredients, editing, onSave }: Props) {
   const [selection, setSelection] = useState(false);
+  const parsedIngredients = parseIngredients(ingredients);
 
   return (
     <section className="container mx-auto py-12">
@@ -32,24 +36,28 @@ export default function RecipeIngredients({ ingredients, editing }: Props) {
 ...`}
           onCancel={() => setSelection(false)}
           onSave={(content) => {
-            console.log(content);
+            onSave?.(content);
             setSelection(false);
           }}
+          value={ingredients}
         />
-      ) : ingredients.length > 0 ? (
-        <div className="flex mt-6 gap-x-8 flex-wrap">
-          {ingredients.map((group) => (
-            <div key={group.title} className="flex-1">
-              {group.title && (
+      ) : parsedIngredients.length > 0 ? (
+        <div className="flex mt-6 gap-8 flex-wrap">
+          {parseIngredients(ingredients).map((group, index) => (
+            <div key={group.content + index} className="flex-1 basis-1/4 flex-wrap">
+              {group.content && (
                 <Typography as="h3" variant="h5" className="mb-3">
-                  {group.title}
+                  {group.content}
                 </Typography>
               )}
 
               <ul>
-                {group.children.map((ingredient) => (
-                  <li className="py-2 border-b border-primary-300 last-of-type:border-b-0" key={ingredient}>
-                    {ingredient}
+                {group.children.map((ingredient, index) => (
+                  <li
+                    className="py-2 border-b border-primary-300 last-of-type:border-b-0"
+                    key={ingredient.content + index}
+                  >
+                    {ingredient.content}
                   </li>
                 ))}
               </ul>

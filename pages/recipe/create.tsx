@@ -9,16 +9,18 @@ import RecipeMedia from "@/components/recipe-media";
 import { Recipe } from "@/types";
 import Button from "@/components/button";
 import Icon from "@/components/icon";
+import useCreateRecipe from "@/hooks/use-create-recipe";
 
 export default function CreateRecipe() {
-  const [recipe, setRecipe] = useState<Omit<Recipe, "id">>({
+  const { mutate } = useCreateRecipe();
+  const [recipe, setRecipe] = useState<Omit<Recipe, "id">>(() => ({
     title: "Untitled Recipe",
     description: "",
     category: "",
     image: undefined,
-    ingredients: [],
-    instructions: [],
-  });
+    ingredients: undefined,
+    instructions: undefined,
+  }));
 
   return (
     <>
@@ -29,17 +31,25 @@ export default function CreateRecipe() {
       </Head>
 
       <main>
-        <RecipeMenuBar onSave={() => {}} />
+        <RecipeMenuBar onSave={() => mutate(recipe)} />
 
-        <RecipeHeader editing recipe={recipe} />
+        <RecipeHeader editing recipe={recipe} onSave={(data) => setRecipe((prev) => ({ ...prev, ...data }))} />
 
         <RecipeBar editing />
 
-        <RecipeIngredients editing ingredients={recipe.ingredients!} />
+        <RecipeIngredients
+          editing
+          ingredients={recipe.ingredients}
+          onSave={(ingredients) => setRecipe((prev) => ({ ...prev, ingredients }))}
+        />
 
         <RecipeMedia editing recipe={recipe} />
 
-        <RecipeInstructions editing instructions={recipe.instructions!} />
+        <RecipeInstructions
+          editing
+          instructions={recipe.instructions}
+          onSave={(instructions) => setRecipe((prev) => ({ ...prev, instructions }))}
+        />
 
         <footer className="flex container mx-auto justify-center gap-x-2 mb-16">
           <Button href="/">

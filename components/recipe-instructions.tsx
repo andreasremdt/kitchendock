@@ -5,14 +5,19 @@ import Icon from "@/components/icon";
 import Button from "@/components/button";
 import Editor from "@/components/editor";
 import EmptyState from "@/components/empty-state";
+import { JSONContent } from "@tiptap/react";
+import cx from "classnames";
+import { parseInstructions } from "@/lib/parser";
 
 type Props = {
-  instructions: Instructions;
+  instructions?: Instructions;
   editing: boolean;
+  onSave?: (content?: JSONContent) => void;
 };
 
-export default function RecipeInstructions({ instructions, editing }: Props) {
+export default function RecipeInstructions({ instructions, editing, onSave }: Props) {
   const [selection, setSelection] = useState(false);
+  const parsedInstructions = parseInstructions(instructions);
 
   return (
     <section className="max-w-lg mx-auto my-12">
@@ -30,15 +35,28 @@ export default function RecipeInstructions({ instructions, editing }: Props) {
           onCancel={() => setSelection(false)}
           placeholder="Wash and cut your vegetables into small pieces. You got it from here, just believe in yourself..."
           onSave={(content) => {
-            console.log(content);
+            onSave?.(content);
             setSelection(false);
           }}
+          value={instructions}
         />
-      ) : instructions.length > 0 ? (
+      ) : parsedInstructions.length > 0 ? (
         <ol className="instructions-list">
-          {instructions.map((instruction) => (
-            <li key={instruction} className="mb-12 last-of-type:mb-0 flex gap-x-8">
-              {instruction}
+          {parsedInstructions.map((instruction, index) => (
+            <li
+              key={instruction.content + index}
+              className={cx("last-of-type:mb-0 flex gap-x-8", {
+                "instruction mb-12": instruction.type !== "heading",
+                "mb-6 pl-14": instruction.type === "heading",
+              })}
+            >
+              {instruction.type === "heading" ? (
+                <Typography as="h3" variant="h5">
+                  {instruction.content}
+                </Typography>
+              ) : (
+                instruction.content
+              )}
             </li>
           ))}
         </ol>

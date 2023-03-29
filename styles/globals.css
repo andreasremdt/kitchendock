@@ -53,7 +53,7 @@
     counter-reset: list;
   }
 
-  .instructions-list li::before {
+  .instructions-list .instruction::before {
     @apply font-bold text-5xl text-primary-700;
     counter-increment: list;
     content: counter(list);

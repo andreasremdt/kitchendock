@@ -12,5 +12,7 @@ export default async function fetcher(method: string, url: string, body?: any) {
     throw new Error(await response.text());
   }
 
-  return response.json();
+  const json = await response.json();
+
+  return json.data || json;
 }
