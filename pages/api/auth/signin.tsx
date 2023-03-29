@@ -23,7 +23,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         return res.status(401).json({ error: "Email or password are invalid." });
       }
 
-      const token = generateJWT(user);
+      const token = await generateJWT(user);
 
       res.setHeader("Set-Cookie", getCookie(token)).json({ user: { email: user.email, name: user.name } });
     } catch (ex) {

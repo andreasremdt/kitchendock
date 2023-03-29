@@ -23,7 +23,6 @@
     "@tiptap/react": "^2.0.0-beta.220",
     "@types/bcrypt": "^5.0.0",
     "@types/cookie": "^0.5.1",
-    "@types/jsonwebtoken": "^9.0.1",
     "@types/node": "18.15.10",
     "@types/react": "18.0.30",
     "@types/react-dom": "18.0.11",
@@ -33,12 +32,13 @@
     "cookie": "^0.5.0",
     "eslint": "8.36.0",
     "eslint-config-next": "13.2.4",
-    "jsonwebtoken": "^9.0.0",
+    "jose": "^4.13.1",
     "next": "13.2.4",
     "postcss": "^8.4.12",
     "prisma": "^4.12.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-hook-form": "^7.43.8",
     "tailwindcss": "^3.0.23",
     "typescript": "5.0.2"
   }

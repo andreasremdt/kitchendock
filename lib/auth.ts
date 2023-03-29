@@ -1,7 +1,7 @@
 import { User } from "@prisma/client";
 import bcrypt from "bcrypt";
 import { serialize } from "cookie";
-import jwt from "jsonwebtoken";
+import { SignJWT } from "jose";
 
 export function hashPassword(password: string) {
   return bcrypt.hash(password, parseInt(process.env.ENCRYPTION_ROUNDS, 10));
@@ -12,9 +12,16 @@ export function comparePasswords(password: string, hash: string) {
 }
 
 export function generateJWT(user: User) {
+  const iat = Math.floor(Date.now() / 1000);
+  const exp = iat + 60 * 60;
   const { id, email, name } = user;
 
-  return jwt.sign({ id, email, name }, process.env.JWT_SECRET);
+  return new SignJWT({ id, email, name })
+    .setProtectedHeader({ alg: "HS256", typ: "JWT" })
+    .setExpirationTime(exp)
+    .setIssuedAt(iat)
+    .setNotBefore(iat)
+    .sign(new TextEncoder().encode(process.env.JWT_SECRET));
 }
 
 export function getCookie(token: string) {

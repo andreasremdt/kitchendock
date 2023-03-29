@@ -27,7 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         },
       });
 
-      const token = generateJWT(user);
+      const token = await generateJWT(user);
 
       return res
         .setHeader("Set-Cookie", getCookie(token))
