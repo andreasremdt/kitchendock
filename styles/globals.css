@@ -39,4 +39,14 @@
     -webkit-text-stroke: 1px #5e3722;
     text-shadow: 3px 3px 0 #5e3722, -1px -1px 0 #5e3722, 1px -1px 0 #5e3722, -1px 1px 0 #5e3722, 1px 1px 0 #5e3722;
   }
+
+  .instructions-list {
+    counter-reset: list;
+  }
+
+  .instructions-list li::before {
+    @apply font-bold text-5xl text-primary-700;
+    counter-increment: list;
+    content: counter(list);
+  }
 }

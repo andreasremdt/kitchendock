@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import cx from "classnames";
-
+import Icon from "@/components/icon";
 import Button from "@/components/button";
 import { Preferences } from "@/types";
 
@@ -27,7 +26,7 @@ export default function RecipeBar() {
       <div className="container mx-auto flex">
         <div className="flex items-center mr-auto">
           <Button title="Decrease serves" onClick={handleDecrease}>
-            <MinusIcon className="w-5 h-5" />
+            <Icon name="minus" />
           </Button>
           <span className="border-x border-primary-300 block px-2 mx-1 font-sans font-bold uppercase text-xs tracking-widest">
             {preferences.serves} serve{preferences.serves > 1 && "s"}
@@ -36,7 +35,7 @@ export default function RecipeBar() {
             title="Increase serves"
             onClick={() => setPreferences((prev) => ({ ...prev, serves: prev.serves + 1 }))}
           >
-            <PlusIcon className="w-5 h-5" />
+            <Icon name="plus" />
           </Button>
         </div>
 
