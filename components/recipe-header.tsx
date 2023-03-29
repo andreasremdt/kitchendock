@@ -15,7 +15,7 @@ export default function RecipeHeader({ recipe, editing }: Props) {
   const [selection, setSelection] = useState<Selection>(null);
 
   return (
-    <header className="banner py-32 border-y border-primary-300">
+    <header className="bg-banner py-32 border-b border-primary-300">
       <div className="bg-white border border-primary-300 max-w-4xl w-full px-16 pb-12 mx-auto text-center">
         {selection === "title" && editing ? (
           <div className="relative w-full max-w-lg mt-4 mb-8 mx-auto">

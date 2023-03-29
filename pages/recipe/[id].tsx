@@ -1,13 +1,12 @@
 import { useState } from "react";
 import Head from "next/head";
-import Image from "next/image";
-import Icon from "@/components/icon";
 import recipes from "../../lib/data";
-import Button from "@/components/button";
 import RecipeBar from "@/components/recipe-bar";
 import RecipeIngredients from "@/components/recipe-ingredients";
 import RecipeInstructions from "@/components/recipe-instructions";
 import RecipeHeader from "@/components/recipe-header";
+import RecipeMenuBar from "@/components/recipe-menu-bar";
+import RecipeMedia from "@/components/recipe-media";
 
 export default function Recipe() {
   const recipe = recipes[1];
@@ -22,17 +21,7 @@ export default function Recipe() {
       </Head>
 
       <main>
-        <div className="bg-primary-50">
-          <div className="container mx-auto py-2 flex">
-            <Button href="/">
-              <Icon name="chevronLeft" /> Go Back
-            </Button>
-            <Button className="ml-auto" onClick={() => setEditing(!editing)} selected={editing}>
-              <Icon name={editing ? "check" : "fileEdit"} />
-              {editing ? "Finish Editing" : "Enable Edit Mode"}
-            </Button>
-          </div>
-        </div>
+        <RecipeMenuBar editing={editing} onEdit={() => setEditing(!editing)} />
 
         <RecipeHeader editing={editing} recipe={recipe} />
 
@@ -40,17 +29,7 @@ export default function Recipe() {
 
         <RecipeIngredients editing={editing} ingredients={recipe.ingredients!} />
 
-        {recipe.image && (
-          <div className="container mx-auto">
-            <Image
-              src={recipe.image}
-              alt={recipe.title}
-              width={1024}
-              height={768}
-              className="aspect-video object-cover"
-            />
-          </div>
-        )}
+        <RecipeMedia editing={editing} recipe={recipe} />
 
         <RecipeInstructions editing={editing} instructions={recipe.instructions!} />
       </main>

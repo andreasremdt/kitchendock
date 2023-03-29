@@ -26,7 +26,7 @@ export default function RecipeBar({ editing }: Props) {
   }
 
   return (
-    <nav className="py-1 border-b border-primary-300 sticky top-0 bg-primary-100">
+    <nav className="py-1 border-b z-10 border-primary-300 sticky top-12 bg-primary-100">
       <div className="container mx-auto flex">
         {!editing && (
           <div className="flex items-center">
