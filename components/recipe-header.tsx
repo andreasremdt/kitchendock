@@ -56,7 +56,7 @@ export default function RecipeHeader({ recipe, editing }: Props) {
           </div>
         ) : (
           <Typography variant="h4" className="mb-4 w-max mx-auto relative">
-            {recipe.category || "Category"}
+            {recipe.category || "Uncategorized"}
             {editing && (
               <Button
                 title="Edit"
@@ -82,7 +82,7 @@ export default function RecipeHeader({ recipe, editing }: Props) {
           </div>
         ) : (
           <Typography className="mb-4 w-max mx-auto relative">
-            {recipe.description || "Description"}
+            {recipe.description || "No description, yet..."}
             {editing && (
               <Button
                 title="Edit"

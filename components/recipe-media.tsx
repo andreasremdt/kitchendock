@@ -2,7 +2,7 @@ import Image from "next/image";
 import { Recipe } from "@/types";
 import Icon from "./icon";
 import Button from "./button";
-import Typography from "./typography";
+import EmptyState from "@/components/empty-state";
 
 type Props = {
   recipe: Partial<Recipe>;
@@ -43,13 +43,12 @@ export default function RecipeMedia({ editing, recipe }: Props) {
       )}
 
       {!recipe.image && editing && (
-        <div className="border border-primary-300 bg-upload flex items-center justify-center flex-col px-4 py-8">
-          <Icon name="image" width={48} height={48} className="text-primary-300" />
-          <Typography className="my-4">
-            You can upload an image by dragging and dropping it onto this area, or by clicking the below button.
-          </Typography>
+        <EmptyState
+          icon="image"
+          text="You can upload an image by dragging and dropping it onto this area, or by clicking the below button."
+        >
           <Button>Add Image or Video</Button>
-        </div>
+        </EmptyState>
       )}
     </div>
   );

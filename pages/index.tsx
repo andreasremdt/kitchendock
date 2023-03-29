@@ -3,6 +3,7 @@ import Head from "next/head";
 import recipes from "../lib/data";
 import Typography from "@/components/typography";
 import Card from "@/components/card";
+import Button from "@/components/button";
 
 export default function Home() {
   return (
@@ -14,9 +15,14 @@ export default function Home() {
       </Head>
 
       <main className="container mx-auto">
-        <Typography variant="h1" as="h1" className="text-center py-16">
-          My Recipes
-        </Typography>
+        <header className="text-center py-16">
+          <Typography variant="h1" as="h1" className="mb-4">
+            My Recipes
+          </Typography>
+          <Button variant="solid" href="/recipe/create">
+            Create New Recipe
+          </Button>
+        </header>
 
         <ul className="grid grid-cols-4 gap-4">
           {recipes.map((recipe) => (

@@ -15,7 +15,8 @@ function getStyles(variant: "text" | "solid" | "editor", selected?: boolean) {
       { "text-primary-900": selected },
       { "text-primary-600": !selected }
     ),
-    solid: "",
+    solid:
+      "py-2 px-4 uppercase text-xs bg-primary-900 text-primary-50 hover:bg-white font-sans font-bold tracking-widest hover:text-primary-900 focus-visible:text-primary-900",
     editor: cx("hover:bg-primary-900 hover:text-primary-50 cursor-default p-1", {
       "bg-primary-900 text-primary-50": selected,
     }),

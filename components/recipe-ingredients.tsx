@@ -4,6 +4,7 @@ import { Ingredients } from "@/types";
 import Editor from "@/components/editor";
 import Icon from "@/components/icon";
 import Button from "@/components/button";
+import EmptyState from "@/components/empty-state";
 
 type Props = {
   ingredients: Ingredients;
@@ -25,13 +26,17 @@ export default function RecipeIngredients({ ingredients, editing }: Props) {
       </Typography>
       {selection && editing ? (
         <Editor
+          placeholder={`100g tomatoes
+3 big paprika
+100ml water
+...`}
           onCancel={() => setSelection(false)}
           onSave={(content) => {
             console.log(content);
             setSelection(false);
           }}
         />
-      ) : (
+      ) : ingredients.length > 0 ? (
         <div className="flex mt-6 gap-x-8 flex-wrap">
           {ingredients.map((group) => (
             <div key={group.title} className="flex-1">
@@ -51,6 +56,13 @@ export default function RecipeIngredients({ ingredients, editing }: Props) {
             </div>
           ))}
         </div>
+      ) : (
+        <EmptyState
+          icon="list"
+          text="This recipe has no ingredients, yet. Start adding your ingredients now by clicking on the below button."
+        >
+          <Button onClick={() => setSelection(true)}>Add Ingredients</Button>
+        </EmptyState>
       )}
     </section>
   );
