@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "@/lib/prisma";
 import { Recipe } from "@prisma/client";
+import { getSession } from "@/lib/auth";
 
 type Data = {
   data?: Recipe | Recipe[];
@@ -8,9 +9,16 @@ type Data = {
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
+  const user = await getSession(req);
+
+  if (!user) {
+    return res.status(401).json({});
+  }
+
   if (req.method === "POST") {
     const { title, video, description, image, ingredients, category, instructions, rating, difficulty, timeNeeded } =
       req.body;
+
     try {
       const recipe = await prisma.recipe.create({
         data: {
@@ -24,7 +32,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
           rating,
           difficulty,
           timeNeeded,
-          userId: "1",
+          user: {
+            connect: {
+              id: user.id,
+            },
+          },
         },
       });
 
@@ -40,7 +52,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     try {
       const recipes = await prisma.recipe.findMany({
         where: {
-          trashed: false,
+          AND: {
+            userId: user.id,
+            trashed: false,
+          },
         },
       });
 

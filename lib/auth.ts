@@ -1,7 +1,8 @@
 import { User } from "@prisma/client";
 import bcrypt from "bcrypt";
 import { serialize } from "cookie";
-import { SignJWT } from "jose";
+import { SignJWT, jwtVerify } from "jose";
+import { NextApiRequest } from "next";
 
 const expiresInSeconds = 60 * 60 * 24 * 7;
 
@@ -24,6 +25,18 @@ export function generateJWT(user: User) {
     .setIssuedAt(iat)
     .setNotBefore(iat)
     .sign(new TextEncoder().encode(process.env.JWT_SECRET));
+}
+
+export async function getSession(req: NextApiRequest) {
+  const cookie = req.cookies[process.env.COOKIE_NAME];
+
+  if (!cookie) {
+    return null;
+  }
+
+  const { payload } = await jwtVerify(cookie, new TextEncoder().encode(process.env.JWT_SECRET));
+
+  return payload as Pick<User, "id" | "name" | "email">;
 }
 
 export function getCookie(token: string, remember: boolean) {

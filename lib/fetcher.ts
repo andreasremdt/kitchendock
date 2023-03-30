@@ -1,7 +1,7 @@
-export default async function fetcher(method: string, url: string, body?: any) {
+export default async function fetcher(method: string, url: string, body?: JSON | string) {
   const response = await fetch(url, {
     method,
-    ...(body && { body: JSON.stringify(body) }),
+    ...(body && { body: typeof body === "object" ? JSON.stringify(body) : body }),
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",

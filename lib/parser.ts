@@ -125,10 +125,9 @@ export function transformHeadingsTo(level: "h1" | "h2" | "h3" | "h4" | "h5" | "h
   }
 }
 
-export function transformRecipeForUpdate(recipe: Recipe): string {
+export function stringifyRecipe(recipe: Partial<Recipe>): string {
   return JSON.stringify({
-    title: recipe.title,
-    description: recipe.description,
+    ...recipe,
     ingredients: JSON.stringify(recipe.ingredients),
     instructions: JSON.stringify(recipe.instructions),
   });

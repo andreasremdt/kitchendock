@@ -1,6 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "@/lib/prisma";
 import { Recipe } from "@prisma/client";
+import { getSession } from "@/lib/auth";
+import { joinQueryParameters } from "@/lib/helpers";
 
 type Data = {
   data?: Recipe | Recipe[];
@@ -8,11 +10,19 @@ type Data = {
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
+  const user = await getSession(req);
+  const recipeId = joinQueryParameters(req.query.id);
+
+  if (!user || !recipeId) {
+    return res.status(401).json({});
+  }
+
   if (req.method === "GET") {
     try {
       const recipe = await prisma.recipe.findFirst({
         where: {
-          id: req.query.id as string,
+          id: recipeId,
+          userId: user.id,
         },
       });
 
@@ -31,7 +41,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     try {
       const exists = await prisma.recipe.findUnique({
         where: {
-          id: req.query.id as string,
+          id_userId: {
+            id: recipeId,
+            userId: user.id,
+          },
         },
       });
 
@@ -41,7 +54,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
       const recipe = await prisma.recipe.update({
         where: {
-          id: req.query.id as string,
+          id_userId: {
+            id: recipeId,
+            userId: user.id,
+          },
         },
         data: {
           title,
@@ -65,7 +81,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     try {
       const exists = await prisma.recipe.findUnique({
         where: {
-          id: req.query.id as string,
+          id: recipeId,
+          id_userId: {
+            id: recipeId,
+            userId: user.id,
+          },
         },
       });
 
@@ -75,7 +95,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
       const recipe = await prisma.recipe.delete({
         where: {
-          id: req.query.id as string,
+          id_userId: {
+            id: recipeId,
+            userId: user.id,
+          },
         },
       });
 
