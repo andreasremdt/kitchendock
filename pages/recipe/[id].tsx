@@ -11,16 +11,13 @@ import Icon from "@/components/icon";
 import useRecipe from "@/hooks/use-recipe";
 import { useRouter } from "next/router";
 import { joinQueryParameters } from "@/lib/helpers";
-import { Recipe } from "@/types";
+import useUpdateRecipe from "@/hooks/use-update-recipe";
 
 export default function ViewRecipe() {
   const router = useRouter();
-  const { recipe, status } = useRecipe(joinQueryParameters(router.query.id));
+  const { recipe, status } = useRecipe(joinQueryParameters(router.query.id) as string);
+  const { mutate } = useUpdateRecipe(joinQueryParameters(router.query.id) as string);
   const [locked, setLocked] = useState(true);
-
-  function handleSave(changes: Partial<Recipe>) {
-    console.log(changes);
-  }
 
   return (
     <>
@@ -38,14 +35,19 @@ export default function ViewRecipe() {
       </MenuBar>
 
       <main>
-        <RecipeHeader locked={locked} onSave={handleSave} loading={status === "loading"} recipe={recipe} />
+        <RecipeHeader
+          locked={locked}
+          onSave={(changes) => mutate(changes)}
+          loading={status === "loading"}
+          recipe={recipe}
+        />
 
         <RecipeBar locked={locked} />
 
         <RecipeIngredients
           locked={locked}
           loading={status === "loading"}
-          onSave={handleSave}
+          onSave={(changes) => mutate(changes)}
           ingredients={recipe.ingredients}
         />
 
@@ -53,7 +55,7 @@ export default function ViewRecipe() {
 
         <RecipeInstructions
           loading={status === "loading"}
-          onSave={handleSave}
+          onSave={(changes) => mutate(changes)}
           locked={locked}
           instructions={recipe.instructions}
         />

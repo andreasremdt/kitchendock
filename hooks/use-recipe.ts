@@ -3,11 +3,11 @@ import { Recipe as RawRecipe } from "@prisma/client";
 import { Recipe } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 
-export default function useRecipe(id?: string) {
+export default function useRecipe(recipeId?: string) {
   const query = useQuery<RawRecipe>({
-    queryKey: ["recipes", id],
-    queryFn: () => fetcher("GET", `/api/recipes/${id}`),
-    enabled: Boolean(id),
+    queryKey: ["recipes", recipeId],
+    queryFn: () => fetcher("GET", `/api/recipes/${recipeId}`),
+    enabled: Boolean(recipeId),
   });
 
   return {

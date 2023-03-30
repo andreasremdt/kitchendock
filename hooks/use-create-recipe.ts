@@ -12,7 +12,7 @@ export default function useCreateRecipe() {
       await queryClient.cancelQueries({ queryKey: ["recipes"] });
 
       const previousRecipes = queryClient.getQueryData<Recipe[]>(["recipes"]);
-      const newRecipe: Recipe = { id: "temp", ...recipe };
+      const newRecipe = { id: "temp", ...recipe } as Recipe;
 
       queryClient.setQueryData<Recipe[]>(["recipes"], (previous) => [...previous!, newRecipe]);
 
