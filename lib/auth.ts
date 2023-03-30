@@ -24,10 +24,14 @@ export function generateJWT(user: User) {
     .sign(new TextEncoder().encode(process.env.JWT_SECRET));
 }
 
-export function getCookie(token: string) {
+export function getCookie(token: string, remember: boolean) {
+  const expiresInSeconds = 60 * 60 * 24 * 7;
+
   return serialize(process.env.COOKIE_NAME, token, {
     httpOnly: true,
     path: "/",
-    maxAge: 60 * 60 * 24 * 7,
+    maxAge: remember ? expiresInSeconds : undefined,
+    expires: remember ? new Date(expiresInSeconds * 1000) : undefined,
+    sameSite: "strict",
   });
 }

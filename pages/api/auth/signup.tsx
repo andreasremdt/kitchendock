@@ -10,27 +10,28 @@ type Data = {
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
   if (req.method === "POST") {
+    const { email, password, remember, name } = req.body;
     try {
       const exists = await prisma.user.findFirst({
-        where: { email: req.body.email },
+        where: { email },
       });
 
       if (exists) {
-        res.status(400).json({ error: `A user with the email ${req.body.email} already exists.` });
+        res.status(400).json({ error: `A user with the email ${email} already exists.` });
       }
 
       const user = await prisma.user.create({
         data: {
-          email: req.body.email,
-          password: await hashPassword(req.body.password),
-          name: req.body.name,
+          email,
+          password: await hashPassword(password),
+          name,
         },
       });
 
       const token = await generateJWT(user);
 
       return res
-        .setHeader("Set-Cookie", getCookie(token))
+        .setHeader("Set-Cookie", getCookie(token, remember))
         .status(201)
         .json({ user: { email: user.email, name: user.name } });
     } catch (ex) {
