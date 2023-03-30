@@ -17,7 +17,10 @@ Dropdown.Item = Menu.Item;
 Dropdown.Items = function Items<T extends ElementType>({ className, ...props }: MenuItemsProps<T>) {
   return (
     <Menu.Items
-      className={cx("absolute bg-primary-50 border border-primary-300 flex flex-col w-max max-w-md py-2", className)}
+      className={cx(
+        "absolute z-20 bg-primary-50 border border-primary-300 flex flex-col w-max max-w-md py-2",
+        className
+      )}
       {...props}
     />
   );

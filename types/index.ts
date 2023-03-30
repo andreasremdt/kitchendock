@@ -26,3 +26,14 @@ export type Recipe = {
   ingredients?: Ingredients;
   instructions?: Instructions;
 };
+
+export type Node = {
+  type: string;
+  content: string;
+};
+
+export type ParsedIngredient = {
+  children: Node[];
+  type: string;
+  content: string;
+};

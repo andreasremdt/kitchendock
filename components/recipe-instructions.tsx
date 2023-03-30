@@ -1,72 +1,43 @@
 import { useState } from "react";
-import { Instructions } from "@/types";
+import { Instructions, Recipe } from "@/types";
 import Typography from "@/components/typography";
-import Icon from "@/components/icon";
-import Button from "@/components/button";
 import Editor from "@/components/editor";
-import EmptyState from "@/components/empty-state";
-import { JSONContent } from "@tiptap/react";
-import cx from "classnames";
 import { parseInstructions } from "@/lib/parser";
+import RecipeInstructionsList from "./recipe-instructions-list";
 
 type Props = {
   instructions?: Instructions;
-  editing: boolean;
-  onSave?: (content?: JSONContent) => void;
+  locked?: boolean;
+  loading?: boolean;
+  onSave: (content: Partial<Recipe>) => void;
 };
 
-export default function RecipeInstructions({ instructions, editing, onSave }: Props) {
-  const [selection, setSelection] = useState(false);
-  const parsedInstructions = parseInstructions(instructions);
+export default function RecipeInstructions({ instructions, locked, loading, onSave }: Props) {
+  const [editing, setEditing] = useState(false);
 
   return (
-    <section className="max-w-lg mx-auto my-12">
+    <section className="container mx-auto my-12">
       <Typography as="h2" variant="h3" className="mb-12 flex gap-x-1 justify-center">
         Instructions
-        {editing && !selection && (
-          <Button title="Edit" onClick={() => setSelection(true)}>
-            <Icon name="edit" width={24} height={24} />
-          </Button>
-        )}
       </Typography>
 
-      {selection && editing ? (
+      {editing ? (
         <Editor
-          onCancel={() => setSelection(false)}
+          onCancel={() => setEditing(false)}
           placeholder="Wash and cut your vegetables into small pieces. You got it from here, just believe in yourself..."
           onSave={(content) => {
-            onSave?.(content);
-            setSelection(false);
+            onSave({ instructions: content });
+            setEditing(false);
           }}
           value={instructions}
         />
-      ) : parsedInstructions.length > 0 ? (
-        <ol className="instructions-list">
-          {parsedInstructions.map((instruction, index) => (
-            <li
-              key={instruction.content + index}
-              className={cx("last-of-type:mb-0 flex gap-x-8", {
-                "instruction mb-12": instruction.type !== "heading",
-                "mb-6 pl-14": instruction.type === "heading",
-              })}
-            >
-              {instruction.type === "heading" ? (
-                <Typography as="h3" variant="h5">
-                  {instruction.content}
-                </Typography>
-              ) : (
-                instruction.content
-              )}
-            </li>
-          ))}
-        </ol>
       ) : (
-        <EmptyState
-          icon="list"
-          text="This recipe has no instructions, yet. Start adding your instructions now by clicking on the below button."
-        >
-          <Button onClick={() => setSelection(true)}>Add Instructions</Button>
-        </EmptyState>
+        <RecipeInstructionsList
+          loading={loading}
+          locked={locked}
+          onEdit={() => setEditing(true)}
+          instructions={parseInstructions(instructions)}
+        />
       )}
     </section>
   );

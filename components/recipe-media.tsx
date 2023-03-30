@@ -1,55 +1,65 @@
 import Image from "next/image";
 import { Recipe } from "@/types";
-import Icon from "./icon";
-import Button from "./button";
+import Icon from "@/components/icon";
+import Button from "@/components/button";
 import EmptyState from "@/components/empty-state";
+import Skeleton from "@/components/skeleton";
+import cx from "classnames";
 
 type Props = {
-  recipe: Partial<Recipe>;
-  editing: boolean;
+  recipe?: Partial<Recipe>;
+  loading?: boolean;
+  locked?: boolean;
 };
 
-export default function RecipeMedia({ editing, recipe }: Props) {
-  return (
-    <div className="container mx-auto relative">
-      {recipe.image && (
-        <>
-          <Image
-            src={recipe.image}
-            alt={recipe.title || ""}
-            width={1024}
-            height={768}
-            className="aspect-video object-cover"
-          />
-          {editing && (
-            <div className="absolute top-2 right-2 flex gap-x-1">
-              <button
-                type="button"
-                title="Edit"
-                className="bg-primary-700 text-primary-50 p-2 hover:bg-primary-900 focus-visible:bg-primary-900"
-              >
-                <Icon name="edit" width={32} height={32} />
-              </button>
-              <button
-                type="button"
-                title="Delete"
-                className="bg-primary-700 text-primary-50 p-2 hover:bg-primary-900 focus-visible:bg-primary-900"
-              >
-                <Icon name="cancel" width={32} height={32} />
-              </button>
-            </div>
-          )}
-        </>
-      )}
+export default function RecipeMedia({ locked, loading, recipe }: Props) {
+  if (loading) {
+    return <Skeleton className="h-96 bg-primary-200 container mx-auto" />;
+  }
 
-      {!recipe.image && editing && (
+  if (!recipe?.image && !locked) {
+    return (
+      <div className="container mx-auto">
         <EmptyState
           icon="image"
           text="You can upload an image by dragging and dropping it onto this area, or by clicking the below button."
         >
           <Button>Add Image or Video</Button>
         </EmptyState>
-      )}
-    </div>
-  );
+      </div>
+    );
+  }
+
+  if (recipe?.image) {
+    return (
+      <div
+        className={cx("container mx-auto", {
+          "relative group hover:scale-[1.01] transition-transform": !locked,
+        })}
+      >
+        <Image
+          src={recipe.image}
+          alt={recipe.title || ""}
+          width={1024}
+          height={768}
+          className="aspect-video object-cover w-full"
+        />
+        {!locked && (
+          <button
+            type="button"
+            className="absolute opacity-0 transition-opacity group-hover:opacity-100 inset-0 bg-primary-200/50 border border-primary-300 w-full"
+          >
+            <Icon
+              name="edit"
+              width={48}
+              height={48}
+              className="text-primary-600 border p-2 border-primary-300 bg-primary-50 absolute top-1 right-1"
+            />
+          </button>
+        )}
+      </div>
+    );
+  }
+
+  return null;
 }

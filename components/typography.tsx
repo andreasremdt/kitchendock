@@ -1,7 +1,7 @@
 import { ComponentPropsWithoutRef, ElementType } from "react";
 import cx from "classnames";
 
-type Props<T extends ElementType> = {
+export type Props<T extends ElementType> = {
   as?: T;
   variant?: "p" | "h1" | "h2" | "h3" | "h4" | "h5";
 } & ComponentPropsWithoutRef<T>;

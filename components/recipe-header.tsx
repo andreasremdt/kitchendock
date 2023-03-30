@@ -1,130 +1,48 @@
-import { useState, KeyboardEvent } from "react";
-import Typography from "@/components/typography";
-import Button from "@/components/button";
-import Icon from "@/components/icon";
-import Input from "@/components/input";
 import { Recipe } from "@/types";
+import InlineEditable from "@/components/inline-editable";
+import Card from "@/components/card";
+import Skeleton from "@/components/skeleton";
 
 type Props = {
-  recipe: Pick<Recipe, "title" | "category" | "description">;
-  editing: boolean;
-  onSave?: (data: Partial<Recipe>) => void;
+  recipe?: Partial<Recipe>;
+  locked?: boolean;
+  loading?: boolean;
+  onSave: (data: Partial<Recipe>) => void;
 };
 
-type Selection = "title" | "description" | "category" | null;
-
-export default function RecipeHeader({ recipe, editing, onSave }: Props) {
-  const [selection, setSelection] = useState<Selection>(null);
-  const [title, setTitle] = useState(() => recipe.title);
-  const [description, setDescription] = useState(() => recipe.description);
-  const [category, setCategory] = useState(() => recipe.category);
-
-  function handleSave() {
-    onSave?.({ title, description, category });
-    setSelection(null);
-  }
-
-  function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) {
-    if (event.key === "Enter") {
-      handleSave();
-    }
-
-    if (event.key === "Escape") {
-      setSelection(null);
-
-      if (title !== recipe.title) setTitle(recipe.title);
-      if (description !== recipe.description) setDescription(recipe.description);
-      if (category !== recipe.category) setCategory(recipe.category);
-    }
-  }
-
+export default function RecipeHeader({ recipe = {}, locked, loading, onSave }: Props) {
   return (
-    <header className="bg-banner h-96 border-b border-primary-300 flex items-center">
-      <div className="bg-white border border-primary-300 max-w-4xl w-full px-16 pb-12 mx-auto text-center">
-        {selection === "title" && editing ? (
-          <div className="relative w-full max-w-lg mt-4 mb-8 mx-auto">
-            <Input
-              variant="big"
-              value={title}
-              onChange={(event) => setTitle(event.currentTarget.value)}
-              onKeyDown={handleKeyDown}
-              autoFocus
-            />
-            <Button className="absolute right-2 top-1/2 -translate-y-1/2" onClick={handleSave}>
-              <Icon name="save" width={28} height={28} />
-            </Button>
-          </div>
+    <header className="bg-banner h-[450px] border-b border-primary-300 flex items-center">
+      <Card className="container px-16 pb-8 mx-auto text-center">
+        {loading ? (
+          <>
+            <Skeleton className="w-1/2 h-16 mt-6 mb-8 mx-auto" />
+            <Skeleton className="w-32 h-8 mb-6 mx-auto" />
+            <Skeleton className="w-3/4 h-6 mb-2 mx-auto" />
+            <Skeleton className="w-2/4 h-6 mb-8 mx-auto" />
+          </>
         ) : (
-          <Typography variant="h1" as="h1" className="-translate-y-8 relative">
-            {title}
-            {editing && (
-              <Button
-                title="Edit"
-                onClick={() => setSelection("title")}
-                className="absolute -right-10 top-1/2 -translate-y-1/2"
-              >
-                <Icon name="edit" width={32} height={32} />
-              </Button>
-            )}
-          </Typography>
-        )}
+          <>
+            <InlineEditable
+              disabled={locked}
+              variant="h1"
+              as="h1"
+              className="-translate-y-8"
+              onSave={(title) => onSave({ title })}
+            >
+              {recipe.title}
+            </InlineEditable>
 
-        {selection === "category" && editing ? (
-          <div className="relative w-full max-w-lg mb-4 mx-auto">
-            <Input
-              className="border border-primary-300 h-10 px-2 outline-none w-full"
-              value={category}
-              autoFocus
-              onChange={(event) => setCategory(event.currentTarget.value)}
-              onKeyDown={handleKeyDown}
-            />
-            <Button className="absolute right-1 top-1/2 -translate-y-1/2" onClick={handleSave}>
-              <Icon name="save" />
-            </Button>
-          </div>
-        ) : (
-          <Typography variant="h4" className="mb-4 mx-auto relative">
-            {category || "Uncategorized"}
-            {editing && (
-              <Button
-                title="Edit"
-                onClick={() => setSelection("category")}
-                className="absolute -right-10 top-1/2 -translate-y-1/2"
-              >
-                <Icon name="edit" />
-              </Button>
-            )}
-          </Typography>
-        )}
+            <InlineEditable disabled={locked} variant="h4" className="mb-4" onSave={(category) => onSave({ category })}>
+              {recipe.category || (locked ? "" : "Select a category...")}
+            </InlineEditable>
 
-        {selection === "description" && editing ? (
-          <div className="relative w-full max-w-lg mt-4 mx-auto">
-            <Input
-              className="border border-primary-300 h-10 px-2 outline-none w-full"
-              value={description}
-              autoFocus
-              onChange={(event) => setDescription(event.currentTarget.value)}
-              onKeyDown={handleKeyDown}
-            />
-            <Button className="absolute right-1 top-1/2 -translate-y-1/2" onClick={handleSave}>
-              <Icon name="save" />
-            </Button>
-          </div>
-        ) : (
-          <Typography className="mb-4 mx-auto relative">
-            {description || "No description, yet..."}
-            {editing && (
-              <Button
-                title="Edit"
-                onClick={() => setSelection("description")}
-                className="absolute -right-10 top-1/2 -translate-y-1/2"
-              >
-                <Icon name="edit" />
-              </Button>
-            )}
-          </Typography>
+            <InlineEditable disabled={locked} onSave={(description) => onSave({ description })}>
+              {recipe.description || (locked ? "" : "Write a description...")}
+            </InlineEditable>
+          </>
         )}
-      </div>
+      </Card>
     </header>
   );
 }

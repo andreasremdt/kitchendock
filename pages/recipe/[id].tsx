@@ -11,12 +11,16 @@ import Icon from "@/components/icon";
 import useRecipe from "@/hooks/use-recipe";
 import { useRouter } from "next/router";
 import { joinQueryParameters } from "@/lib/helpers";
-import Loaders from "@/components/loaders";
+import { Recipe } from "@/types";
 
-export default function Recipe() {
+export default function ViewRecipe() {
   const router = useRouter();
   const { recipe, status } = useRecipe(joinQueryParameters(router.query.id));
-  const [editing, setEditing] = useState(false);
+  const [locked, setLocked] = useState(true);
+
+  function handleSave(changes: Partial<Recipe>) {
+    console.log(changes);
+  }
 
   return (
     <>
@@ -27,34 +31,32 @@ export default function Recipe() {
       </Head>
 
       <MenuBar>
-        <Button onClick={() => setEditing(!editing)} selected={editing}>
-          <Icon name={editing ? "check" : "fileEdit"} />
-          {editing ? "Finish Editing" : "Enable Edit Mode"}
+        <Button onClick={() => setLocked(!locked)} selected={!locked}>
+          <Icon name={locked ? "fileEdit" : "check"} />
+          {locked ? "Enable Edit Mode" : "Finish Editing"}
         </Button>
       </MenuBar>
 
       <main>
-        {status === "loading" || !recipe ? (
-          <Loaders.RecipeHeader />
-        ) : (
-          <RecipeHeader editing={editing} recipe={recipe} />
-        )}
+        <RecipeHeader locked={locked} onSave={handleSave} loading={status === "loading"} recipe={recipe} />
 
-        <RecipeBar editing={editing} />
+        <RecipeBar locked={locked} />
 
-        {status === "loading" || !recipe ? (
-          <Loaders.RecipeIngredients />
-        ) : (
-          <RecipeIngredients editing={editing} ingredients={recipe.ingredients} />
-        )}
+        <RecipeIngredients
+          locked={locked}
+          loading={status === "loading"}
+          onSave={handleSave}
+          ingredients={recipe.ingredients}
+        />
 
-        <RecipeMedia editing={editing} recipe={recipe} />
+        <RecipeMedia loading={status === "loading"} locked={locked} recipe={recipe} />
 
-        {status === "loading" || !recipe ? (
-          <Loaders.RecipeInstructions />
-        ) : (
-          <RecipeInstructions editing={editing} instructions={recipe.instructions} />
-        )}
+        <RecipeInstructions
+          loading={status === "loading"}
+          onSave={handleSave}
+          locked={locked}
+          instructions={recipe.instructions}
+        />
       </main>
     </>
   );

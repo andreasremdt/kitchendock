@@ -22,6 +22,10 @@ export default function CreateRecipe() {
     instructions: undefined,
   }));
 
+  function handleSave(changes: Partial<Recipe>) {
+    setRecipe((prev) => ({ ...prev, ...changes }));
+  }
+
   return (
     <>
       <Head>
@@ -37,23 +41,15 @@ export default function CreateRecipe() {
       </MenuBar>
 
       <main>
-        <RecipeHeader editing recipe={recipe} onSave={(data) => setRecipe((prev) => ({ ...prev, ...data }))} />
+        <RecipeHeader recipe={recipe} onSave={handleSave} />
 
-        <RecipeBar editing />
+        <RecipeBar />
 
-        <RecipeIngredients
-          editing
-          ingredients={recipe.ingredients}
-          onSave={(ingredients) => setRecipe((prev) => ({ ...prev, ingredients }))}
-        />
+        <RecipeIngredients ingredients={recipe.ingredients} onSave={handleSave} />
 
-        <RecipeMedia editing recipe={recipe} />
+        <RecipeMedia recipe={recipe} />
 
-        <RecipeInstructions
-          editing
-          instructions={recipe.instructions}
-          onSave={(instructions) => setRecipe((prev) => ({ ...prev, instructions }))}
-        />
+        <RecipeInstructions instructions={recipe.instructions} onSave={handleSave} />
 
         <footer className="flex container mx-auto justify-center gap-x-2 mb-16">
           <Button href="/">

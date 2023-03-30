@@ -6,12 +6,7 @@ import Heading from "@tiptap/extension-heading";
 import Italic from "@tiptap/extension-italic";
 import Bold from "@tiptap/extension-bold";
 import Text from "@tiptap/extension-text";
-import { Recipe } from "@/types";
-
-interface Node {
-  type: string;
-  content: string;
-}
+import { ParsedIngredient, Recipe, Node } from "@/types";
 
 function findHeading(node: JSONContent, json: JSONContent): JSONContent | null {
   if (json.content) {
@@ -50,7 +45,7 @@ function hasContent(node: JSONContent): boolean {
   return getTextContent(node).trim().length > 0;
 }
 
-export function parseIngredients(value?: JSONContent) {
+export function parseIngredients(value?: JSONContent): ParsedIngredient[] {
   if (!value || !value.content) {
     return [];
   }
