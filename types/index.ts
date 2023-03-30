@@ -37,3 +37,10 @@ export type ParsedIngredient = {
   type: string;
   content: string;
 };
+
+export type AuthUserFields = {
+  name?: string;
+  email: string;
+  password: string;
+  remember: boolean;
+};

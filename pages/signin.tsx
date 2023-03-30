@@ -8,30 +8,23 @@ import Label from "@/components/label";
 import Button from "@/components/button";
 import Error from "@/components/error";
 import Checkbox from "@/components/checkbox";
-import fetcher from "@/lib/fetcher";
-
-type Fields = {
-  email: string;
-  password: string;
-  remember: boolean;
-};
+import ErrorState from "@/components/error-state";
+import { AuthUserFields } from "@/types";
+import useAuthFlow from "@/hooks/use-auth-flow";
 
 export default function SignIn() {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
-  } = useForm<Fields>();
+  } = useForm<AuthUserFields>();
 
-  async function onSubmit(data: Fields) {
-    try {
-      const user = await fetcher("POST", "/api/auth/signin", data);
-
-      Router.push("/");
-    } catch (ex) {
-      console.log(ex);
-    }
-  }
+  const { status, mutate } = useAuthFlow("signin", {
+    onError(error: Error) {
+      setError("root", { message: error.message });
+    },
+  });
 
   return (
     <>
@@ -43,7 +36,7 @@ export default function SignIn() {
 
       <main className="min-h-screen grid items-center bg-banner">
         <form
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={handleSubmit((data) => mutate(data))}
           className="max-w-lg w-full bg-primary-50 border border-primary-300 mx-auto"
         >
           <header className="border-b border-primary-300 text-center p-8">
@@ -62,6 +55,8 @@ export default function SignIn() {
           </header>
 
           <div className="p-8 bg-primary-100">
+            {errors.root && <ErrorState className="mb-4">{errors.root.message}</ErrorState>}
+
             <div className="mb-6">
               <Label htmlFor="email">Email address</Label>
               <Input
@@ -97,7 +92,7 @@ export default function SignIn() {
             </div>
 
             <footer className="flex justify-center">
-              <Button type="submit" variant="solid">
+              <Button type="submit" variant="solid" loading={status === "loading"}>
                 Sign In
               </Button>
             </footer>
