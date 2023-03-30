@@ -17,7 +17,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       });
 
       if (!recipe) {
-        return res.status(404).end();
+        return res.status(404).json({});
       }
 
       res.json({ data: recipe });
@@ -36,7 +36,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       });
 
       if (!exists) {
-        return res.status(404).end();
+        return res.status(404).json({});
       }
 
       const recipe = await prisma.recipe.update({
@@ -70,7 +70,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       });
 
       if (!exists) {
-        return res.status(404).end();
+        return res.status(404).json({});
       }
 
       const recipe = await prisma.recipe.delete({
@@ -83,7 +83,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     } catch (ex) {
       res.status(500).json({ error: (ex as Error).message });
     }
+  } else {
+    res.status(405).json({});
   }
-
-  res.status(405);
 }

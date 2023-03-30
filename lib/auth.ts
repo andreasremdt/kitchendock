@@ -3,6 +3,8 @@ import bcrypt from "bcrypt";
 import { serialize } from "cookie";
 import { SignJWT } from "jose";
 
+const expiresInSeconds = 60 * 60 * 24 * 7;
+
 export function hashPassword(password: string) {
   return bcrypt.hash(password, parseInt(process.env.ENCRYPTION_ROUNDS, 10));
 }
@@ -13,7 +15,7 @@ export function comparePasswords(password: string, hash: string) {
 
 export function generateJWT(user: User) {
   const iat = Math.floor(Date.now() / 1000);
-  const exp = iat + 60 * 60;
+  const exp = iat + expiresInSeconds;
   const { id, email, name } = user;
 
   return new SignJWT({ id, email, name })
@@ -25,13 +27,20 @@ export function generateJWT(user: User) {
 }
 
 export function getCookie(token: string, remember: boolean) {
-  const expiresInSeconds = 60 * 60 * 24 * 7;
-
   return serialize(process.env.COOKIE_NAME, token, {
     httpOnly: true,
     path: "/",
     maxAge: remember ? expiresInSeconds : undefined,
     expires: remember ? new Date(expiresInSeconds * 1000) : undefined,
+    sameSite: "strict",
+  });
+}
+
+export function getInvalidatedCookie() {
+  return serialize(process.env.COOKIE_NAME, "", {
+    httpOnly: true,
+    path: "/",
+    maxAge: 0,
     sameSite: "strict",
   });
 }
