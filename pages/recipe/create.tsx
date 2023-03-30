@@ -4,7 +4,7 @@ import RecipeBar from "@/components/recipe-bar";
 import RecipeIngredients from "@/components/recipe-ingredients";
 import RecipeInstructions from "@/components/recipe-instructions";
 import RecipeHeader from "@/components/recipe-header";
-import RecipeMenuBar from "@/components/recipe-menu-bar";
+import MenuBar from "@/components/menu-bar";
 import RecipeMedia from "@/components/recipe-media";
 import { Recipe } from "@/types";
 import Button from "@/components/button";
@@ -30,9 +30,13 @@ export default function CreateRecipe() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        <RecipeMenuBar onSave={() => mutate(recipe)} />
+      <MenuBar>
+        <Button onClick={() => mutate(recipe)}>
+          <Icon name="save" /> Save
+        </Button>
+      </MenuBar>
 
+      <main>
         <RecipeHeader editing recipe={recipe} onSave={(data) => setRecipe((prev) => ({ ...prev, ...data }))} />
 
         <RecipeBar editing />

@@ -1,8 +1,8 @@
-import { ComponentPropsWithoutRef, ElementType } from "react";
+import { ComponentPropsWithoutRef, ElementType, ForwardedRef, Ref, forwardRef } from "react";
 import Link from "next/link";
 import cx from "classnames";
 
-type Props<T extends ElementType> = {
+export type Props<T extends ElementType> = {
   as?: "a" | "button";
   selected?: boolean;
   variant?: "text" | "solid" | "editor";
@@ -25,23 +25,20 @@ function getStyles(variant: "text" | "solid" | "editor", selected?: boolean) {
   return styles[variant];
 }
 
-export default function Button<C extends ElementType = "a" | "button">({
-  as,
-  variant = "text",
-  href,
-  selected,
-  type = "button",
-  className,
-  ...props
-}: Props<C>) {
+export default forwardRef(function Button<C extends ElementType = "a" | "button">(
+  { as, variant = "text", href, selected, type = "button", className, ...props }: Props<C>,
+  ref: ForwardedRef<C>
+) {
   const Tag = href ? Link : "button";
 
   return (
+    // @ts-ignore
     <Tag
       href={href}
       className={cx("inline-flex items-center gap-2", getStyles(variant, selected), className)}
       type={href ? undefined : type}
       {...props}
+      ref={ref}
     />
   );
-}
+});

@@ -5,8 +5,10 @@ import RecipeBar from "@/components/recipe-bar";
 import RecipeIngredients from "@/components/recipe-ingredients";
 import RecipeInstructions from "@/components/recipe-instructions";
 import RecipeHeader from "@/components/recipe-header";
-import RecipeMenuBar from "@/components/recipe-menu-bar";
 import RecipeMedia from "@/components/recipe-media";
+import MenuBar from "@/components/menu-bar";
+import Button from "@/components/button";
+import Icon from "@/components/icon";
 
 export default function Recipe() {
   const recipe = recipes[1];
@@ -20,9 +22,14 @@ export default function Recipe() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        <RecipeMenuBar editing={editing} onEdit={() => setEditing(!editing)} />
+      <MenuBar>
+        <Button onClick={() => setEditing(!editing)} selected={editing}>
+          <Icon name={editing ? "check" : "fileEdit"} />
+          {editing ? "Finish Editing" : "Enable Edit Mode"}
+        </Button>
+      </MenuBar>
 
+      <main>
         <RecipeHeader editing={editing} recipe={recipe} />
 
         <RecipeBar editing={editing} />
