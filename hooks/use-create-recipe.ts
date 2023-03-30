@@ -14,7 +14,7 @@ export default function useCreateRecipe() {
       const previousRecipes = queryClient.getQueryData<Recipe[]>(["recipes"]);
       const newRecipe = { id: "temp", ...recipe } as Recipe;
 
-      queryClient.setQueryData<Recipe[]>(["recipes"], (previous) => [...previous!, newRecipe]);
+      queryClient.setQueryData<Recipe[]>(["recipes"], (previous) => [...(previous || []), newRecipe]);
 
       return { previousRecipes };
     },

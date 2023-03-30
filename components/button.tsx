@@ -32,7 +32,6 @@ export default forwardRef(function Button<C extends ElementType = "a" | "button"
   ref: ForwardedRef<C>
 ) {
   const Tag = href ? Link : "button";
-  console.log(loading);
 
   return (
     // @ts-ignore

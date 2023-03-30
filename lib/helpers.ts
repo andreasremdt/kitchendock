@@ -5,3 +5,11 @@ export function joinQueryParameters(params?: string | string[]) {
 
   return params;
 }
+
+export function optionalParse(data: string | object): object {
+  if (typeof data === "string") {
+    return JSON.parse(data);
+  }
+
+  return data;
+}
