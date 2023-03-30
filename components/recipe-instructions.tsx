@@ -21,7 +21,7 @@ export default function RecipeInstructions({ instructions, editing, onSave }: Pr
 
   return (
     <section className="max-w-lg mx-auto my-12">
-      <Typography as="h2" variant="h3" className="mb-6 flex gap-x-1">
+      <Typography as="h2" variant="h3" className="mb-12 flex gap-x-1 justify-center">
         Instructions
         {editing && !selection && (
           <Button title="Edit" onClick={() => setSelection(true)}>

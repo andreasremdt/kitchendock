@@ -13,13 +13,13 @@ export default function EmptyState({ text, icon, children, className, ...props }
   return (
     <div
       className={cx(
-        "text-center border border-primary-300 p-4 bg-cogs flex flex-col justify-center max-w-2xl mx-auto items-center",
+        "text-center border border-primary-300 p-4 bg-cogs flex flex-col justify-center items-center",
         className
       )}
       {...props}
     >
       {icon && <Icon name={icon} width={48} height={48} className="text-primary-300 mb-4" />}
-      <Typography className="mb-2">{text}</Typography>
+      <Typography className="mb-4">{text}</Typography>
       {children}
     </div>
   );

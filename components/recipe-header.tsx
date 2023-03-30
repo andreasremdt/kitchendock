@@ -39,7 +39,7 @@ export default function RecipeHeader({ recipe, editing, onSave }: Props) {
   }
 
   return (
-    <header className="bg-banner py-32 border-b border-primary-300">
+    <header className="bg-banner h-96 border-b border-primary-300 flex items-center">
       <div className="bg-white border border-primary-300 max-w-4xl w-full px-16 pb-12 mx-auto text-center">
         {selection === "title" && editing ? (
           <div className="relative w-full max-w-lg mt-4 mb-8 mx-auto">
@@ -83,7 +83,7 @@ export default function RecipeHeader({ recipe, editing, onSave }: Props) {
             </Button>
           </div>
         ) : (
-          <Typography variant="h4" className="mb-4 w-max mx-auto relative">
+          <Typography variant="h4" className="mb-4 mx-auto relative">
             {category || "Uncategorized"}
             {editing && (
               <Button
@@ -111,7 +111,7 @@ export default function RecipeHeader({ recipe, editing, onSave }: Props) {
             </Button>
           </div>
         ) : (
-          <Typography className="mb-4 w-max mx-auto relative">
+          <Typography className="mb-4 mx-auto relative">
             {description || "No description, yet..."}
             {editing && (
               <Button

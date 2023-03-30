@@ -20,7 +20,7 @@ export default function RecipeIngredients({ ingredients, editing, onSave }: Prop
 
   return (
     <section className="container mx-auto py-12">
-      <Typography as="h2" variant="h3" className="mb-6 flex gap-x-1">
+      <Typography as="h2" variant="h3" className="mb-12 flex gap-x-1 justify-center">
         Ingredients
         {editing && !selection && (
           <Button title="Edit" onClick={() => setSelection(true)}>
