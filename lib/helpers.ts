@@ -13,3 +13,14 @@ export function optionalParse(data: string | object): object {
 
   return data;
 }
+
+export function toBase64(file: Blob) {
+  const reader = new FileReader();
+
+  return new Promise<string>((resolve, reject) => {
+    reader.readAsDataURL(file);
+
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = (error) => reject(error);
+  });
+}

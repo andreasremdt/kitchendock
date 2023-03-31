@@ -7,5 +7,10 @@ declare namespace NodeJS {
     DATABASE_NAME: string;
     DATABASE_URL: string;
     COOKIE_NAME: string;
+    CLOUDINARY_CLOUD: string;
+    CLOUDINARY_API_KEY: string;
+    CLOUDINARY_API_SECRET: string;
+    UNSPLASH_ACCESS_KEY: string;
+    UNSPLASH_SECRET_KEY: string;
   }
 }
