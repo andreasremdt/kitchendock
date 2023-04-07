@@ -1,17 +1,17 @@
 import { useState } from "react";
 import { Ingredients, Recipe } from "@/types";
 import { parseIngredients } from "@/lib/parser";
-import RecipeIngredientList from "@/components/recipe-ingredient-list";
+import RecipeIngredientList from "@/views/recipe/components/recipe-ingredient-list";
 import { Container, Editor, Typography } from "@/components";
 
 type Props = {
   ingredients?: Ingredients;
   locked?: boolean;
   loading?: boolean;
-  onSave: (data: Partial<Recipe>) => void;
+  onChange: (data: Partial<Recipe>) => void;
 };
 
-export default function RecipeIngredients({ ingredients, locked, loading, onSave }: Props) {
+export default function RecipeIngredients({ ingredients, locked, loading, onChange }: Props) {
   const [editing, setEditing] = useState(false);
 
   return (
@@ -28,7 +28,7 @@ export default function RecipeIngredients({ ingredients, locked, loading, onSave
 ...`}
           onCancel={() => setEditing(false)}
           onSave={(content) => {
-            onSave({ ingredients: content });
+            onChange({ ingredients: content });
             setEditing(false);
           }}
           value={ingredients}

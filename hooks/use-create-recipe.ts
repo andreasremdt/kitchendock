@@ -7,8 +7,8 @@ import { stringifyRecipe } from "@/lib/parser";
 export default function useCreateRecipe() {
   const queryClient = useQueryClient();
 
-  return useMutation((data: Omit<Recipe, "id">) => fetcher("POST", "/api/recipes", stringifyRecipe(data)), {
-    async onMutate(recipe: Omit<Recipe, "id">) {
+  return useMutation((data: Partial<Recipe>) => fetcher("POST", "/api/recipes", stringifyRecipe(data)), {
+    async onMutate(recipe: Partial<Recipe>) {
       await queryClient.cancelQueries({ queryKey: ["recipes"] });
 
       const previousRecipes = queryClient.getQueryData<Recipe[]>(["recipes"]);

@@ -8,7 +8,7 @@ import cx from "classnames";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { toBase64 } from "@/lib/helpers";
 import fetcher from "@/lib/fetcher";
-import MediaSelector from "@/components/media-selector";
+import MediaSelector from "./media-selector";
 
 type Props = {
   recipe?: Partial<Recipe>;

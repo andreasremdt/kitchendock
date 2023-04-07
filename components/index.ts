@@ -11,5 +11,6 @@ export { default as Icon } from "./icon";
 export { default as InlineEditable } from "./inline-editable";
 export { default as Input } from "./input";
 export { default as Label } from "./label";
+export { default as MenuBar } from "./menu-bar";
 export { default as Skeleton } from "./skeleton";
 export { default as Typography } from "./typography";

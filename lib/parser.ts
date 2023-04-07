@@ -7,6 +7,8 @@ import Italic from "@tiptap/extension-italic";
 import Bold from "@tiptap/extension-bold";
 import Text from "@tiptap/extension-text";
 import { ParsedIngredient, Recipe, Node } from "@/types";
+import { Recipe as RawRecipe } from "@prisma/client";
+import { optionalParse } from "@/lib/helpers";
 
 function findHeading(node: JSONContent, json: JSONContent): JSONContent | null {
   if (json.content) {
@@ -126,4 +128,14 @@ export function stringifyRecipe(recipe: Partial<Recipe>): string {
     ingredients: JSON.stringify(recipe.ingredients),
     instructions: JSON.stringify(recipe.instructions),
   });
+}
+
+export function parseRecipe(recipe?: RawRecipe) {
+  if (recipe) {
+    return {
+      ...recipe,
+      instructions: optionalParse(recipe.instructions || "[]"),
+      ingredients: optionalParse(recipe.ingredients || "[]"),
+    } as Recipe;
+  }
 }

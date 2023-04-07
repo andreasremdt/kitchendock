@@ -6,25 +6,22 @@ import { stringifyRecipe } from "@/lib/parser";
 export default function useUpdateRecipe(recipeId: string) {
   const queryClient = useQueryClient();
 
-  return useMutation(
-    (changes: Partial<Recipe>) => fetcher("PATCH", `/api/recipes/${recipeId}`, stringifyRecipe(changes)),
-    {
-      async onMutate(changes: Partial<Recipe>) {
-        await queryClient.cancelQueries({ queryKey: ["recipes", recipeId] });
+  return useMutation((changes: Recipe) => fetcher("PATCH", `/api/recipes/${recipeId}`, stringifyRecipe(changes)), {
+    async onMutate(changes: Partial<Recipe>) {
+      await queryClient.cancelQueries({ queryKey: ["recipes", recipeId] });
 
-        const previousRecipe = queryClient.getQueryData<Recipe>(["recipes", recipeId]);
-        const updatedRecipe = { ...previousRecipe, ...changes } as Recipe;
+      const previousRecipe = queryClient.getQueryData<Recipe>(["recipes", recipeId]);
+      const updatedRecipe = { ...previousRecipe, ...changes } as Recipe;
 
-        queryClient.setQueryData<Recipe>(["recipes", recipeId], (previous) => ({ ...previous, ...updatedRecipe }));
+      queryClient.setQueryData<Recipe>(["recipes", recipeId], (previous) => ({ ...previous, ...updatedRecipe }));
 
-        return { updatedRecipe };
-      },
-      onError(_, __, context) {
-        queryClient.setQueryData(["recipes", recipeId], context?.updatedRecipe);
-      },
-      onSettled() {
-        queryClient.invalidateQueries({ queryKey: ["recipes", recipeId] });
-      },
-    }
-  );
+      return { updatedRecipe };
+    },
+    onError(_, __, context) {
+      queryClient.setQueryData(["recipes", recipeId], context?.updatedRecipe);
+    },
+    onSettled() {
+      queryClient.invalidateQueries({ queryKey: ["recipes", recipeId] });
+    },
+  });
 }

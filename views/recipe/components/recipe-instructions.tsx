@@ -1,17 +1,17 @@
 import { useState } from "react";
 import { Instructions, Recipe } from "@/types";
 import { parseInstructions } from "@/lib/parser";
-import RecipeInstructionsList from "@/components/recipe-instructions-list";
+import RecipeInstructionsList from "@/views/recipe/components/recipe-instructions-list";
 import { Container, Typography, Editor } from "@/components";
 
 type Props = {
   instructions?: Instructions;
   locked?: boolean;
   loading?: boolean;
-  onSave: (content: Partial<Recipe>) => void;
+  onChange: (content: Partial<Recipe>) => void;
 };
 
-export default function RecipeInstructions({ instructions, locked, loading, onSave }: Props) {
+export default function RecipeInstructions({ instructions, locked, loading, onChange }: Props) {
   const [editing, setEditing] = useState(false);
 
   return (
@@ -25,7 +25,7 @@ export default function RecipeInstructions({ instructions, locked, loading, onSa
           onCancel={() => setEditing(false)}
           placeholder="Wash and cut your vegetables into small pieces. You got it from here, just believe in yourself..."
           onSave={(content) => {
-            onSave({ instructions: content });
+            onChange({ instructions: content });
             setEditing(false);
           }}
           value={instructions}

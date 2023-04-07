@@ -1,7 +1,7 @@
 import { Tab } from "@headlessui/react";
-import CaptureImage from "@/components/capture-image";
-import UploadImage from "@/components/upload-image";
-import UnsplashImage from "@/components/unsplash-image";
+import CaptureImage from "./capture-image";
+import UploadImage from "./upload-image";
+import UnsplashImage from "./unsplash-image";
 import { Container, Icon, Button } from "@/components";
 
 type Props = {
