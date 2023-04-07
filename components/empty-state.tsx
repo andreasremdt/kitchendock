@@ -1,7 +1,7 @@
 import { ComponentPropsWithoutRef, ReactNode } from "react";
 import cx from "classnames";
-import Icon, { icons } from "@/components/icon";
-import Typography from "@/components/typography";
+import { icons } from "@/components/icon";
+import { Typography, Icon } from "@/components";
 
 type Props = {
   text: string;

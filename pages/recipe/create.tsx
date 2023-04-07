@@ -7,10 +7,9 @@ import RecipeHeader from "@/components/recipe-header";
 import MenuBar from "@/components/menu-bar";
 import RecipeMedia from "@/components/recipe-media";
 import { Recipe } from "@/types";
-import Button from "@/components/button";
-import Icon from "@/components/icon";
 import useCreateRecipe from "@/hooks/use-create-recipe";
 import RecipeFooter from "@/components/recipe-footer";
+import { Icon, Button } from "@/components";
 
 export default function CreateRecipe() {
   const { mutate } = useCreateRecipe();

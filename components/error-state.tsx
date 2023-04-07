@@ -1,7 +1,7 @@
 import cx from "classnames";
 import { ComponentPropsWithoutRef, ReactNode } from "react";
-import Icon, { icons } from "@/components/icon";
-import Typography from "@/components/typography";
+import { icons } from "@/components/icon";
+import { Typography, Icon } from "@/components";
 
 type Props = {
   icon?: keyof typeof icons;

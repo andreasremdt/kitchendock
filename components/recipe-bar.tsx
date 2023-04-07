@@ -1,9 +1,7 @@
 import { useState } from "react";
 import cx from "classnames";
-import Icon from "@/components/icon";
-import Button from "@/components/button";
 import { Preferences } from "@/types";
-import Container from "@/components/container";
+import { Container, Button, Icon } from "@/components";
 
 type Props = {
   locked?: boolean;

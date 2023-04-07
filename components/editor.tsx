@@ -7,8 +7,7 @@ import Placeholder from "@tiptap/extension-placeholder";
 import Italic from "@tiptap/extension-italic";
 import Bold from "@tiptap/extension-bold";
 import Heading from "@tiptap/extension-heading";
-import Icon from "@/components/icon";
-import Button from "@/components/button";
+import { Button, Icon } from "@/components";
 import { transformHeadingsTo } from "@/lib/parser";
 
 type Props = {

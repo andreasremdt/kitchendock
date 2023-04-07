@@ -1,10 +1,8 @@
 import { Tab } from "@headlessui/react";
-import Button from "@/components/button";
-import Icon from "@/components/icon";
 import CaptureImage from "@/components/capture-image";
 import UploadImage from "@/components/upload-image";
 import UnsplashImage from "@/components/unsplash-image";
-import Container from "@/components/container";
+import { Container, Icon, Button } from "@/components";
 
 type Props = {
   onUpload: (data: string) => void;

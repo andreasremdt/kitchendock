@@ -1,10 +1,6 @@
-import Skeleton from "@/components/skeleton";
-import EmptyState from "@/components/empty-state";
-import Button from "@/components/button";
-import Typography from "@/components/typography";
-import { ParsedIngredient } from "@/types";
-import Icon from "@/components/icon";
 import cx from "classnames";
+import { ParsedIngredient } from "@/types";
+import { Icon, Typography, Button, EmptyState, Skeleton } from "@/components";
 
 type Props = {
   loading?: boolean;

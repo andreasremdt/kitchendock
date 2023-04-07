@@ -1,5 +1,5 @@
-import cx from "classnames";
 import { ComponentPropsWithoutRef } from "react";
+import cx from "classnames";
 
 type Props = ComponentPropsWithoutRef<"div">;
 

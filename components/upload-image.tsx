@@ -1,8 +1,6 @@
 import { ChangeEvent, useRef, useState } from "react";
 import Image from "next/image";
-import Button from "@/components/button";
-import Icon from "@/components/icon";
-import Typography from "@/components/typography";
+import { Icon, Button, Typography } from "@/components";
 import { toBase64 } from "@/lib/helpers";
 
 type Props = {

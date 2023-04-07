@@ -1,11 +1,7 @@
 import { FormEvent, useRef, useState } from "react";
 import Image from "next/image";
-import Button from "@/components/button";
-import Icon from "@/components/icon";
-import Typography from "@/components/typography";
-import Input from "@/components/input";
 import fetcher from "@/lib/fetcher";
-import Error from "@/components/error";
+import { Error, Input, Typography, Icon, Button } from "@/components";
 
 type Props = {
   onUpload: (data: string) => void;

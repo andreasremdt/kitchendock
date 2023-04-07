@@ -1,16 +1,9 @@
 import Head from "next/head";
-import Router from "next/router";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import Typography from "@/components/typography";
-import Input from "@/components/input";
-import Label from "@/components/label";
-import Button from "@/components/button";
-import Error from "@/components/error";
-import Checkbox from "@/components/checkbox";
-import ErrorState from "@/components/error-state";
 import { AuthUserFields } from "@/types";
 import useAuthFlow from "@/hooks/use-auth-flow";
+import { ErrorState, Error, Checkbox, Button, Label, Input, Typography } from "@/components";
 
 export default function SignIn() {
   const {

@@ -1,7 +1,7 @@
 import { ComponentPropsWithoutRef, ElementType, ForwardedRef, Ref, forwardRef } from "react";
 import Link from "next/link";
 import cx from "classnames";
-import Icon from "@/components/icon";
+import { Icon } from "@/components";
 
 export type Props<T extends ElementType> = {
   as?: "a" | "button";

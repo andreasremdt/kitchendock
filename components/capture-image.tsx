@@ -1,10 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import Button from "@/components/button";
-import Icon from "@/components/icon";
-import Typography from "@/components/typography";
 import { Dialog } from "@headlessui/react";
-import ErrorState from "@/components/error-state";
+import { Button, Icon, Typography, ErrorState } from "@/components";
 
 type Props = {
   onUpload: (data: string) => void;

@@ -1,6 +1,4 @@
-import Button from "./button";
-import Container from "./container";
-import Icon from "./icon";
+import { Button, Container, Icon } from "@/components";
 
 type Props = {
   onSave: () => void;

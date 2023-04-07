@@ -1,12 +1,8 @@
 import Head from "next/head";
-import Typography from "@/components/typography";
-import Button from "@/components/button";
-import Dropdown from "@/components/dropdown";
-import Icon from "@/components/icon";
 import MenuBar from "@/components/menu-bar";
 import useRecipes from "@/hooks/use-recipes";
 import RecipeList from "@/components/recipe-list";
-import Container from "@/components/container";
+import { Container, Dropdown, Icon, Button, Typography } from "@/components";
 
 export default function Home() {
   const { recipes, status } = useRecipes();

@@ -1,10 +1,7 @@
-import Button from "@/components/button";
-import Icon from "@/components/icon";
-import Dropdown from "@/components/dropdown";
 import { ReactNode } from "react";
 import Router from "next/router";
 import fetcher from "@/lib/fetcher";
-import Container from "@/components/container";
+import { Container, Dropdown, Icon, Button } from "@/components";
 
 type Props = {
   children?: ReactNode;

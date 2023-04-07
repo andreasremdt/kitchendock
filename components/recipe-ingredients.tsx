@@ -1,10 +1,8 @@
 import { useState } from "react";
-import Typography from "@/components/typography";
 import { Ingredients, Recipe } from "@/types";
-import Editor from "@/components/editor";
 import { parseIngredients } from "@/lib/parser";
-import RecipeIngredientList from "./recipe-ingredient-list";
-import Container from "@/components/container";
+import RecipeIngredientList from "@/components/recipe-ingredient-list";
+import { Container, Editor, Typography } from "@/components";
 
 type Props = {
   ingredients?: Ingredients;

@@ -6,12 +6,11 @@ import RecipeInstructions from "@/components/recipe-instructions";
 import RecipeHeader from "@/components/recipe-header";
 import RecipeMedia from "@/components/recipe-media";
 import MenuBar from "@/components/menu-bar";
-import Button from "@/components/button";
-import Icon from "@/components/icon";
 import useRecipe from "@/hooks/use-recipe";
 import { useRouter } from "next/router";
 import { joinQueryParameters } from "@/lib/helpers";
 import useUpdateRecipe from "@/hooks/use-update-recipe";
+import { Icon, Button } from "@/components";
 
 export default function ViewRecipe() {
   const router = useRouter();

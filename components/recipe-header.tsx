@@ -1,8 +1,5 @@
 import { Recipe } from "@/types";
-import InlineEditable from "@/components/inline-editable";
-import Card from "@/components/card";
-import Skeleton from "@/components/skeleton";
-import Container from "@/components/container";
+import { Container, Skeleton, Card, InlineEditable } from "@/components";
 
 type Props = {
   recipe?: Partial<Recipe>;
