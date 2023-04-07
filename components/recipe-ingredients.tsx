@@ -4,6 +4,7 @@ import { Ingredients, Recipe } from "@/types";
 import Editor from "@/components/editor";
 import { parseIngredients } from "@/lib/parser";
 import RecipeIngredientList from "./recipe-ingredient-list";
+import Container from "@/components/container";
 
 type Props = {
   ingredients?: Ingredients;
@@ -16,7 +17,7 @@ export default function RecipeIngredients({ ingredients, locked, loading, onSave
   const [editing, setEditing] = useState(false);
 
   return (
-    <section className="container mx-auto py-12">
+    <Container as="section" className="py-12">
       <Typography as="h2" variant="h3" className="mb-12 flex gap-x-1 justify-center">
         Ingredients
       </Typography>
@@ -42,6 +43,6 @@ export default function RecipeIngredients({ ingredients, locked, loading, onSave
           ingredients={parseIngredients(ingredients)}
         />
       )}
-    </section>
+    </Container>
   );
 }

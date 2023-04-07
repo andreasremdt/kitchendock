@@ -6,6 +6,7 @@ import Icon from "@/components/icon";
 import MenuBar from "@/components/menu-bar";
 import useRecipes from "@/hooks/use-recipes";
 import RecipeList from "@/components/recipe-list";
+import Container from "@/components/container";
 
 export default function Home() {
   const { recipes, status } = useRecipes();
@@ -20,7 +21,7 @@ export default function Home() {
 
       <MenuBar />
 
-      <main className="container mx-auto">
+      <Container as="main">
         <header className="text-center py-16">
           <Typography variant="h1" as="h1" className="mb-4">
             My Recipes
@@ -62,7 +63,7 @@ export default function Home() {
         </header>
 
         <RecipeList recipes={recipes} loading={status === "loading"} />
-      </main>
+      </Container>
     </>
   );
 }

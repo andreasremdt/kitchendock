@@ -2,6 +2,7 @@ import { Recipe } from "@/types";
 import InlineEditable from "@/components/inline-editable";
 import Card from "@/components/card";
 import Skeleton from "@/components/skeleton";
+import Container from "@/components/container";
 
 type Props = {
   recipe?: Partial<Recipe>;
@@ -13,7 +14,7 @@ type Props = {
 export default function RecipeHeader({ recipe = {}, locked, loading, onSave }: Props) {
   return (
     <header className="bg-banner h-[450px] border-b border-primary-300 flex items-center">
-      <Card className="container px-16 pb-8 mx-auto text-center">
+      <Container as={Card} className="pb-8">
         {loading ? (
           <>
             <Skeleton className="w-1/2 h-16 mt-6 mb-8 mx-auto" />
@@ -42,7 +43,7 @@ export default function RecipeHeader({ recipe = {}, locked, loading, onSave }: P
             </InlineEditable>
           </>
         )}
-      </Card>
+      </Container>
     </header>
   );
 }

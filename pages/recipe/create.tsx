@@ -10,6 +10,7 @@ import { Recipe } from "@/types";
 import Button from "@/components/button";
 import Icon from "@/components/icon";
 import useCreateRecipe from "@/hooks/use-create-recipe";
+import Container from "@/components/container";
 
 export default function CreateRecipe() {
   const { mutate } = useCreateRecipe();
@@ -53,14 +54,14 @@ export default function CreateRecipe() {
           onSave={(changes) => setRecipe((prev) => ({ ...prev, ...changes }))}
         />
 
-        <footer className="flex container mx-auto justify-center gap-x-2 mb-16">
+        <Container as="footer" className="flex justify-center gap-x-2 mb-16">
           <Button href="/">
             <Icon name="cancel" /> Cancel
           </Button>
           <Button variant="solid">
             <Icon name="save" /> Save
           </Button>
-        </footer>
+        </Container>
       </main>
     </>
   );

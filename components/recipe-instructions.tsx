@@ -4,6 +4,7 @@ import Typography from "@/components/typography";
 import Editor from "@/components/editor";
 import { parseInstructions } from "@/lib/parser";
 import RecipeInstructionsList from "./recipe-instructions-list";
+import Container from "@/components/container";
 
 type Props = {
   instructions?: Instructions;
@@ -16,7 +17,7 @@ export default function RecipeInstructions({ instructions, locked, loading, onSa
   const [editing, setEditing] = useState(false);
 
   return (
-    <section className="container mx-auto my-12">
+    <Container as="section" className="my-12">
       <Typography as="h2" variant="h3" className="mb-12 flex gap-x-1 justify-center">
         Instructions
       </Typography>
@@ -39,6 +40,6 @@ export default function RecipeInstructions({ instructions, locked, loading, onSa
           instructions={parseInstructions(instructions)}
         />
       )}
-    </section>
+    </Container>
   );
 }

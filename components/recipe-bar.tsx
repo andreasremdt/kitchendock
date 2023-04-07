@@ -3,6 +3,7 @@ import cx from "classnames";
 import Icon from "@/components/icon";
 import Button from "@/components/button";
 import { Preferences } from "@/types";
+import Container from "@/components/container";
 
 type Props = {
   locked?: boolean;
@@ -27,7 +28,7 @@ export default function RecipeBar({ locked }: Props) {
 
   return (
     <nav className="py-1 border-b z-10 border-primary-300 sticky top-12 bg-primary-100">
-      <div className="container mx-auto flex">
+      <Container className="flex">
         <div className="flex items-center">
           <Button title="Decrease serves" onClick={handleDecrease}>
             <Icon name="minus" width={18} height={18} />
@@ -97,7 +98,7 @@ export default function RecipeBar({ locked }: Props) {
             °C
           </Button>
         </div>
-      </div>
+      </Container>
     </nav>
   );
 }

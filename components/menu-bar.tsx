@@ -4,6 +4,7 @@ import Dropdown from "@/components/dropdown";
 import { ReactNode } from "react";
 import Router from "next/router";
 import fetcher from "@/lib/fetcher";
+import Container from "@/components/container";
 
 type Props = {
   children?: ReactNode;
@@ -18,7 +19,7 @@ export default function MenuBar({ children }: Props) {
 
   return (
     <div className="bg-primary-50 sticky top-0 h-12 flex items-center z-10 border-b border-primary-300">
-      <div className="container mx-auto flex items-center gap-x-2">
+      <Container className="flex items-center gap-x-2">
         <Dropdown>
           <Dropdown.Button as={Button}>
             <Icon name="list" width={16} height={16} /> Recipes <Icon name="chevronDown" />
@@ -58,7 +59,7 @@ export default function MenuBar({ children }: Props) {
             </Dropdown.Items>
           </Dropdown>
         </div>
-      </div>
+      </Container>
     </div>
   );
 }

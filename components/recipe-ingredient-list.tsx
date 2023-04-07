@@ -16,7 +16,7 @@ type Props = {
 export default function RecipeIngredientList({ ingredients, loading, locked, onEdit }: Props) {
   if (loading) {
     return (
-      <div className="mt-6 container mx-auto grid grid-cols-3 gap-8">
+      <div className="mt-6 grid grid-cols-3 gap-8">
         <div>
           <Skeleton className="h-8 bg-primary-300 mb-3" />
           <Skeleton className="h-6 bg-primary-200 mb-3 w-2/5" />
