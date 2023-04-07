@@ -23,6 +23,7 @@ export type Recipe = {
   description?: string;
   category?: string;
   image?: string;
+  trashed: boolean;
   ingredients?: Ingredients;
   instructions?: Instructions;
 };

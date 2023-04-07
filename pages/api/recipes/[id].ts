@@ -81,7 +81,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     try {
       const exists = await prisma.recipe.findUnique({
         where: {
-          id: recipeId,
           id_userId: {
             id: recipeId,
             userId: user.id,

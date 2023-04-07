@@ -11,11 +11,12 @@ import RecipeFooter from "./components/recipe-footer";
 type Props = {
   recipe?: Partial<Recipe>;
   onSave: () => void;
+  onDelete?: () => void;
   onChange: (data: Partial<Recipe>) => void;
   status?: "loading" | "error" | "success";
 };
 
-export default function RecipeView({ recipe, onSave, onChange, status }: Props) {
+export default function RecipeView({ recipe, onSave, onChange, onDelete, status }: Props) {
   return (
     <>
       <Head>
@@ -25,6 +26,11 @@ export default function RecipeView({ recipe, onSave, onChange, status }: Props) 
       </Head>
 
       <MenuBar>
+        {onDelete && (
+          <Button onClick={onDelete}>
+            <Icon name="delete" /> Delete
+          </Button>
+        )}
         <Button onClick={onSave}>
           <Icon name="save" /> Save
         </Button>

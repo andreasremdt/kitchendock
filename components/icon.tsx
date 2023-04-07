@@ -19,28 +19,19 @@ export const icons = {
   underline: (
     <>
       <path fill="none" d="M0 0h24v24H0z" />
-      <path
-        d="M8 3v9a4 4 0 1 0 8 0V3h2v9a6 6 0 1 1-12 0V3h2zM4 20h16v2H4v-2z"
-        fill="currentColor"
-      />
+      <path d="M8 3v9a4 4 0 1 0 8 0V3h2v9a6 6 0 1 1-12 0V3h2zM4 20h16v2H4v-2z" fill="currentColor" />
     </>
   ),
   chevronLeft: (
     <>
       <path fill="none" d="M0 0h24v24H0z" />
-      <path
-        d="M10.828 12l4.95 4.95-1.414 1.414L8 12l6.364-6.364 1.414 1.414z"
-        fill="currentColor"
-      />
+      <path d="M10.828 12l4.95 4.95-1.414 1.414L8 12l6.364-6.364 1.414 1.414z" fill="currentColor" />
     </>
   ),
   chevronDown: (
     <>
       <path fill="none" d="M0 0h24v24H0z" />
-      <path
-        d="M12 13.172l4.95-4.95 1.414 1.414L12 16 5.636 9.636 7.05 8.222z"
-        fill="currentColor"
-      />
+      <path d="M12 13.172l4.95-4.95 1.414 1.414L12 16 5.636 9.636 7.05 8.222z" fill="currentColor" />
     </>
   ),
   heading: (
@@ -52,10 +43,7 @@ export const icons = {
   check: (
     <>
       <path fill="none" d="M0 0h24v24H0z" />
-      <path
-        d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"
-        fill="currentColor"
-      />
+      <path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z" fill="currentColor" />
     </>
   ),
   save: (
@@ -229,6 +217,14 @@ export const icons = {
       />
     </>
   ),
+  delete: (
+    <>
+      <path
+        d="M17 6H22V8H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V8H2V6H7V3C7 2.44772 7.44772 2 8 2H16C16.5523 2 17 2.44772 17 3V6ZM18 8H6V20H18V8ZM9 11H11V17H9V11ZM13 11H15V17H13V11ZM9 4V6H15V4H9Z"
+        fill="currentColor"
+      />
+    </>
+  ),
 };
 
 type Props = {
@@ -237,13 +233,7 @@ type Props = {
 
 export default function Icon({ name, width = 20, height = 20, ...props }: Props) {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      width={width}
-      height={height}
-      {...props}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={width} height={height} {...props}>
       {icons[name]}
     </svg>
   );
