@@ -10,7 +10,7 @@ import { Recipe } from "@/types";
 import Button from "@/components/button";
 import Icon from "@/components/icon";
 import useCreateRecipe from "@/hooks/use-create-recipe";
-import Container from "@/components/container";
+import RecipeFooter from "@/components/recipe-footer";
 
 export default function CreateRecipe() {
   const { mutate } = useCreateRecipe();
@@ -37,7 +37,7 @@ export default function CreateRecipe() {
         </Button>
       </MenuBar>
 
-      <main>
+      <main className="mb-24">
         <RecipeHeader recipe={recipe} onSave={(changes) => setRecipe((prev) => ({ ...prev, ...changes }))} />
 
         <RecipeBar />
@@ -54,14 +54,7 @@ export default function CreateRecipe() {
           onSave={(changes) => setRecipe((prev) => ({ ...prev, ...changes }))}
         />
 
-        <Container as="footer" className="flex justify-center gap-x-2 mb-16">
-          <Button href="/">
-            <Icon name="cancel" /> Cancel
-          </Button>
-          <Button variant="solid">
-            <Icon name="save" /> Save
-          </Button>
-        </Container>
+        <RecipeFooter onSave={() => mutate(recipe)} />
       </main>
     </>
   );

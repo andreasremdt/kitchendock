@@ -42,7 +42,7 @@ export default function RecipeList({ recipes, loading }: Props) {
     <ul className="grid grid-cols-4 gap-4">
       {recipes.map((recipe) => (
         <li key={recipe.id}>
-          <Card as="a" href={`/recipe/${recipe.id}`}>
+          <Card as="a" href={`/recipe/${recipe.id}`} className="h-full">
             {recipe.image && (
               <Image
                 src={recipe.image}
