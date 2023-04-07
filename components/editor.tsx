@@ -9,6 +9,7 @@ import Bold from "@tiptap/extension-bold";
 import Heading from "@tiptap/extension-heading";
 import { Button, Icon } from "@/components";
 import { transformHeadingsTo } from "@/lib/parser";
+import { useEffect, useRef } from "react";
 
 type Props = {
   value?: JSONContent;
@@ -18,6 +19,7 @@ type Props = {
 };
 
 export default function Editor({ onCancel, onSave, value, placeholder }: Props) {
+  const editorRef = useRef<HTMLDivElement>(null);
   const editor = useEditor({
     editorProps: {
       attributes: {
@@ -51,9 +53,22 @@ export default function Editor({ onCancel, onSave, value, placeholder }: Props) 
     content: value,
   });
 
+  useEffect(() => {
+    if (editorRef.current) {
+      const { top } = editorRef.current.getBoundingClientRect();
+
+      setTimeout(() => {
+        window.scrollTo({
+          top: top + window.pageYOffset - 35 - 48 - 10,
+          behavior: "smooth",
+        });
+      });
+    }
+  }, []);
+
   return (
     <>
-      <nav className="border border-primary-300 flex gap-x-1 p-1">
+      <nav className="border border-primary-300 flex gap-x-1 p-1" ref={editorRef}>
         <Button
           onClick={() => editor?.chain().focus().toggleBold().run()}
           selected={editor?.isActive("bold")}
