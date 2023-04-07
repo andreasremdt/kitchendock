@@ -45,10 +45,11 @@ export default function InlineEditable<C extends ElementType = "p">({
 
   function handleClick(event: MouseEvent<HTMLElement>) {
     event.currentTarget.setAttribute("contenteditable", "true");
+    event.currentTarget.focus();
+    window.getSelection()?.setPosition(event.currentTarget, 1);
 
     if (document.activeElement !== event.currentTarget) {
       cache.current = event.currentTarget.textContent as string;
-      window.getSelection()?.selectAllChildren(event.currentTarget);
     }
   }
 
@@ -56,13 +57,18 @@ export default function InlineEditable<C extends ElementType = "p">({
     // @ts-ignore
     <Typography
       className={cx(
-        "focus:outline-none focus:cursor-text focus:scale-100 caret-primary-900 selection:bg-primary-500/50",
-        { "hover:scale-105 transition-transform cursor-pointer": !disabled },
+        "focus:cursor-text focus:scale-100 caret-primary-900 selection:bg-primary-500/30 min-w-min mx-auto",
+        {
+          "hover:scale-105 transition-transform cursor-pointer outline-none focus:ring focus:ring-primary-300 focus:ring-offset-4":
+            !disabled,
+        },
         className
       )}
       onClick={disabled ? undefined : handleClick}
       onKeyDown={disabled ? undefined : handleKeyDown}
+      onFocus={disabled ? undefined : handleClick}
       onBlur={disabled ? undefined : handleBlur}
+      tabIndex={0}
       {...props}
     >
       {children}
