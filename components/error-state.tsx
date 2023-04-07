@@ -12,7 +12,10 @@ export default function ErrorState({ children, icon, action, className, ...props
   return (
     <div
       role="alert"
-      className={cx("bg-red-100 border border-red-400 text-center p-4 flex flex-col gap-4", className)}
+      className={cx(
+        "bg-red-100 border border-red-400 text-center p-4 flex flex-col gap-4",
+        className
+      )}
       {...props}
     >
       {icon && <Icon name={icon} width={32} height={32} className="mx-auto text-red-400" />}

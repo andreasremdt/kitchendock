@@ -15,7 +15,12 @@ const styles = {
   p: "",
 };
 
-export default function Typography<C extends ElementType = "p">({ as, variant = "p", className, ...props }: Props<C>) {
+export default function Typography<C extends ElementType = "p">({
+  as,
+  variant = "p",
+  className,
+  ...props
+}: Props<C>) {
   const Tag = as || "p";
 
   return <Tag className={cx(styles[variant], className)} {...props} />;

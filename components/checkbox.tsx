@@ -3,7 +3,10 @@ import cx from "classnames";
 
 type Props = Omit<ComponentPropsWithRef<"input">, "type">;
 
-export default forwardRef<HTMLInputElement, Props>(function Checkbox({ className, ...props }: Props, ref) {
+export default forwardRef<HTMLInputElement, Props>(function Checkbox(
+  { className, ...props }: Props,
+  ref
+) {
   return (
     <input
       type="checkbox"

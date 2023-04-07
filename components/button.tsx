@@ -1,10 +1,9 @@
-import { ComponentPropsWithoutRef, ElementType, ForwardedRef, Ref, forwardRef } from "react";
+import { ComponentPropsWithoutRef, ElementType, ForwardedRef, forwardRef } from "react";
 import Link from "next/link";
 import cx from "classnames";
 import { Icon } from "@/components";
 
 export type Props<T extends ElementType> = {
-  as?: "a" | "button";
   selected?: boolean;
   variant?: "text" | "solid" | "editor";
   loading?: boolean;
@@ -28,7 +27,16 @@ function getStyles(variant: "text" | "solid" | "editor", selected?: boolean) {
 }
 
 export default forwardRef(function Button<C extends ElementType = "a" | "button">(
-  { as, variant = "text", href, selected, loading, children, type = "button", className, ...props }: Props<C>,
+  {
+    variant = "text",
+    href,
+    selected,
+    loading,
+    children,
+    type = "button",
+    className,
+    ...props
+  }: Props<C>,
   ref: ForwardedRef<C>
 ) {
   const Tag = href ? Link : "button";
@@ -37,7 +45,11 @@ export default forwardRef(function Button<C extends ElementType = "a" | "button"
     // @ts-ignore
     <Tag
       href={href}
-      className={cx("inline-flex items-center relative gap-2", getStyles(variant, selected), className)}
+      className={cx(
+        "inline-flex items-center relative gap-2",
+        getStyles(variant, selected),
+        className
+      )}
       type={href ? undefined : type}
       disabled={loading}
       {...props}
@@ -45,7 +57,10 @@ export default forwardRef(function Button<C extends ElementType = "a" | "button"
     >
       {children}
       {loading && (
-        <span className={cx("absolute inline-flex items-center", getStyles(variant, selected))} aria-hidden="true">
+        <span
+          className={cx("absolute inline-flex items-center", getStyles(variant, selected))}
+          aria-hidden="true"
+        >
           <Icon name="spinner" className="animate-spin" />
         </span>
       )}

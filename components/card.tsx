@@ -13,7 +13,7 @@ export default function Card<C extends ElementType = "a" | "div">({
   href,
   ...props
 }: Props<C>) {
-  const Tag = href ? Link : "div";
+  const Tag = href ? Link : (as || "div");
 
   return (
     <Tag
