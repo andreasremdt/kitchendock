@@ -45,3 +45,38 @@ export type AuthUserFields = {
   password: string;
   remember: boolean;
 };
+
+export enum IngredientTokenType {
+  Letter,
+  Digit,
+}
+
+export enum IngredientNodeType {
+  Quantity,
+  Unit,
+  Ingredient,
+}
+
+export type IngredientToken =
+  | {
+      type: IngredientTokenType.Letter;
+      value: string;
+    }
+  | {
+      type: IngredientTokenType.Digit;
+      value: string;
+    };
+
+export type IngredientNode =
+  | {
+      type: IngredientNodeType.Quantity;
+      value: number;
+    }
+  | {
+      type: IngredientNodeType.Unit;
+      value: string;
+    }
+  | {
+      type: IngredientNodeType.Ingredient;
+      value: string;
+    };
