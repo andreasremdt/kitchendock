@@ -1,6 +1,7 @@
 import cx from "classnames";
 import { ParsedIngredient } from "@/types";
 import { Icon, Typography, Button, EmptyState, Skeleton } from "@/components";
+import Ingredient from "./ingredient";
 
 type Props = {
   loading?: boolean;
@@ -71,9 +72,7 @@ export default function RecipeIngredientList({ ingredients, loading, locked, onE
           )}
 
           {group.children.map((ingredient, index) => (
-            <li className="py-2 border-b border-primary-300 last-of-type:border-b-0" key={ingredient.content + index}>
-              {ingredient.content}
-            </li>
+            <Ingredient value={ingredient.content} key={ingredient.content + index} />
           ))}
         </ul>
       ))}

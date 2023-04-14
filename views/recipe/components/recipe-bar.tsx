@@ -1,26 +1,17 @@
-import { useState } from "react";
 import cx from "classnames";
-import { Preferences } from "@/types";
 import { Container, Button, Icon } from "@/components";
+import usePreferences from "@/hooks/use-preferences";
 
 type Props = {
   locked?: boolean;
 };
 
 export default function RecipeBar({ locked }: Props) {
-  const [preferences, setPreferences] = useState<Preferences>({
-    serves: 1,
-    measurement: "metric",
-    temperature: "celsius",
-    volume: "weight",
-  });
+  const { preferences, update } = usePreferences();
 
   function handleDecrease() {
     if (preferences.serves > 1) {
-      setPreferences((prev) => ({
-        ...prev,
-        serves: prev.serves - 1,
-      }));
+      update({ serves: preferences.serves - 1 });
     }
   }
 
@@ -34,53 +25,35 @@ export default function RecipeBar({ locked }: Props) {
           <span className="border-x border-primary-300 block px-2 mx-1 font-sans font-bold uppercase text-xs tracking-widest">
             {preferences.serves} serve{preferences.serves > 1 && "s"}
           </span>
-          <Button
-            title="Increase serves"
-            onClick={() => setPreferences((prev) => ({ ...prev, serves: prev.serves + 1 }))}
-          >
+          <Button title="Increase serves" onClick={() => update({ serves: preferences.serves + 1 })}>
             <Icon name="plus" width={18} height={18} />
           </Button>
         </div>
 
         <div className="flex gap-x-1 border-r border-primary-300 mr-2 pr-2 ml-auto">
-          <Button
-            onClick={() => setPreferences((prev) => ({ ...prev, volume: "volume" }))}
-            selected={preferences.volume === "volume"}
-          >
+          <Button onClick={() => update({ volume: "volume" })} selected={preferences.volume === "volume"}>
             Volume
           </Button>
-          <Button
-            onClick={() => setPreferences((prev) => ({ ...prev, volume: "weight" }))}
-            selected={preferences.volume === "weight"}
-          >
+          <Button onClick={() => update({ volume: "weight" })} selected={preferences.volume === "weight"}>
             Weight
           </Button>
-          <Button
-            onClick={() => setPreferences((prev) => ({ ...prev, volume: "cups" }))}
-            selected={preferences.volume === "cups"}
-          >
+          <Button onClick={() => update({ volume: "cups" })} selected={preferences.volume === "cups"}>
             Cups
           </Button>
         </div>
 
         <div className="flex gap-x-1 border-r border-primary-300 mr-2 pr-2">
-          <Button
-            onClick={() => setPreferences((prev) => ({ ...prev, measurement: "imperial" }))}
-            selected={preferences.measurement === "imperial"}
-          >
+          <Button onClick={() => update({ measurement: "imperial" })} selected={preferences.measurement === "imperial"}>
             Imperial
           </Button>
-          <Button
-            onClick={() => setPreferences((prev) => ({ ...prev, measurement: "metric" }))}
-            selected={preferences.measurement === "metric"}
-          >
+          <Button onClick={() => update({ measurement: "metric" })} selected={preferences.measurement === "metric"}>
             Metric
           </Button>
         </div>
 
         <div className="flex gap-x-1">
           <Button
-            onClick={() => setPreferences((prev) => ({ ...prev, temperature: "fahrenheit" }))}
+            onClick={() => update({ temperature: "fahrenheit" })}
             className={cx({
               "text-primary-900": preferences.temperature === "fahrenheit",
             })}
@@ -88,7 +61,7 @@ export default function RecipeBar({ locked }: Props) {
             °F
           </Button>
           <Button
-            onClick={() => setPreferences((prev) => ({ ...prev, temperature: "celsius" }))}
+            onClick={() => update({ temperature: "celsius" })}
             className={cx({
               "text-primary-900": preferences.temperature === "celsius",
             })}

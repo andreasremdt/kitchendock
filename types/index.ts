@@ -52,9 +52,9 @@ export enum IngredientTokenType {
 }
 
 export enum IngredientNodeType {
-  Quantity,
-  Unit,
-  Ingredient,
+  Quantity = "qty",
+  Unit = "unt",
+  Ingredient = "ing",
 }
 
 export type IngredientToken =
@@ -80,3 +80,9 @@ export type IngredientNode =
       type: IngredientNodeType.Ingredient;
       value: string;
     };
+
+export type Ingredient = {
+  quantity?: number;
+  unit?: string;
+  content: string;
+};
