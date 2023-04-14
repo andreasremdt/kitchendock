@@ -53,6 +53,15 @@ export default function InlineEditable<C extends ElementType = "p">({
     }
   }
 
+  function handleFocus(event: FocusEvent<HTMLElement>) {
+    event.currentTarget.setAttribute("contenteditable", "true");
+    window.getSelection()?.setPosition(event.currentTarget, 1);
+
+    if (document.activeElement !== event.currentTarget) {
+      cache.current = event.currentTarget.textContent as string;
+    }
+  }
+
   return (
     // @ts-ignore
     <Typography
@@ -66,7 +75,7 @@ export default function InlineEditable<C extends ElementType = "p">({
       )}
       onClick={disabled ? undefined : handleClick}
       onKeyDown={disabled ? undefined : handleKeyDown}
-      onFocus={disabled ? undefined : handleClick}
+      onFocus={disabled ? undefined : handleFocus}
       onBlur={disabled ? undefined : handleBlur}
       tabIndex={0}
       {...props}
